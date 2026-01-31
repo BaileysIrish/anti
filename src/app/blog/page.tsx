@@ -86,7 +86,7 @@ export default function BlogPage() {
                     <div className="grid gap-6">
                         {blogPosts.map((post) => (
                             <article key={post.slug} className="card p-6 hover:shadow-lg transition-shadow">
-                                <Link href={`/blog/${post.slug}`} className="flex gap-4">
+                                <Link href={`/blog/${post.slug}`} className="flex gap-4" prefetch={false}>
                                     <div className="w-16 h-16 bg-gray-100 rounded-xl flex items-center justify-center flex-shrink-0">
                                         <span className="text-3xl">{post.emoji}</span>
                                     </div>

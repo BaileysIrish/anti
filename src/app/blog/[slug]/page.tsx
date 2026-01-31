@@ -435,7 +435,7 @@ export default async function BlogPostPage({
                 <section>
                     <div className="flex items-center justify-between mb-8">
                         <h3 className="text-2xl font-bold text-slate-900">📚 이 글과 관련된 추천 정보</h3>
-                        <Link href="/blog" className="text-sm font-semibold text-primary hover:text-primary-dark">
+                        <Link href="/blog" className="text-sm font-semibold text-primary hover:text-primary-dark" prefetch={false}>
                             전체보기 →
                         </Link>
                     </div>
@@ -444,7 +444,7 @@ export default async function BlogPostPage({
                             .filter(([key]) => key !== slug)
                             .slice(0, 2)
                             .map(([key, relatedPost]) => (
-                                <Link key={key} href={`/blog/${key}`} className="group bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md hover:border-primary/20 transition-all duration-300">
+                                <Link key={key} href={`/blog/${key}`} className="group bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md hover:border-primary/20 transition-all duration-300" prefetch={false}>
                                     <div className="p-6">
                                         <span className="text-xs font-bold text-primary mb-2 block">{relatedPost.category}</span>
                                         <h4 className="text-lg font-bold text-slate-900 mb-2 group-hover:text-primary transition-colors line-clamp-1">
