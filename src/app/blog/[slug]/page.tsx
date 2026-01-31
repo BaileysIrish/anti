@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import AdPlaceholder from "@/components/ads/AdPlaceholder";
 
 // 블로그 포스트 데이터
+export const dynamic = "force-static";
+
 const blogPostsData: Record<string, {
     title: string;
     description: string;
