@@ -9,7 +9,7 @@ const footerLinks = {
     company: [
         { name: "소개", href: "/about" },
         { name: "블로그", href: "/blog" },
-        { name: "문의하기", href: "/contact" },
+        { name: "자주 묻는 질문 (FAQ)", href: "/faq" },
     ],
     legal: [
         { name: "개인정보처리방침", href: "/privacy" },

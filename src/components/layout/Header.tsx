@@ -9,6 +9,7 @@ const navigation = [
     { name: "환율 계산기", href: "/calculators/exchange-rate" },
     { name: "부동산 시세", href: "/calculators/real-estate" },
     { name: "블로그", href: "/blog" },
+    { name: "FAQ", href: "/faq" },
 ];
 
 export default function Header() {

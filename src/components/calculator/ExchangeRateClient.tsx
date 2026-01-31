@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { currencyFlags, ExchangeRate } from "@/lib/api/koreaexim";
 import AdPlaceholder from "@/components/ads/AdPlaceholder";
 
@@ -9,10 +9,36 @@ type ConversionDirection = "krwToForeign" | "foreignToKrw";
 interface ExchangeRateClientProps {
     rates: ExchangeRate[];
     lastUpdated: string;
-    isLive: boolean;
+    isLive: boolean; // Server Component에서 넘겨준 초기값 (빌드 시점)
 }
 
-export default function ExchangeRateClient({ rates, lastUpdated, isLive }: ExchangeRateClientProps) {
+export default function ExchangeRateClient({ rates: initialRates, lastUpdated: initialLastUpdated, isLive: initialIsLive }: ExchangeRateClientProps) {
+    const [rates, setRates] = useState<ExchangeRate[]>(initialRates);
+    const [isLive, setIsLive] = useState<boolean>(initialIsLive);
+    const [lastUpdated, setLastUpdated] = useState<string>(initialLastUpdated);
+
+    // 실시간 데이터 가져오기 (마운트 후 실행)
+    useEffect(() => {
+        const fetchRealTimeRates = async () => {
+            try {
+                const res = await fetch("/api/exchange-rate");
+                if (res.ok) {
+                    const data = await res.json();
+                    if (Array.isArray(data) && data.length > 0) {
+                        setRates(data);
+                        setIsLive(true);
+                        const today = new Date();
+                        setLastUpdated(`${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일`);
+                    }
+                }
+            } catch (error) {
+                console.error("Failed to fetch real-time rates:", error);
+            }
+        };
+
+        fetchRealTimeRates();
+    }, []);
+
     const [amount, setAmount] = useState<string>("100000");
     const [selectedCurrency, setSelectedCurrency] = useState<string>("USD");
     const [direction, setDirection] = useState<ConversionDirection>("krwToForeign");

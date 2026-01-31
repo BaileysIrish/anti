@@ -1,0 +1,7 @@
+name = "anti"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+# API Key will be set in Cloudflare Dashboard
+# KOREAEXIM_API_KEY = ...
