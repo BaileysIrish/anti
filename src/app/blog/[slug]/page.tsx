@@ -3,6 +3,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import AdPlaceholder from "@/components/ads/AdPlaceholder";
 
+export const runtime = "edge";
+export const dynamicParams = false;
+
 // 블로그 포스트 데이터
 const blogPostsData: Record<string, {
     title: string;
