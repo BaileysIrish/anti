@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/common/Link";
 import AdPlaceholder from "@/components/ads/AdPlaceholder";
 import { fetchExchangeRates, currencyFlags, getEffectiveExchangeDate } from "@/lib/api/koreaexim";
 

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/common/Link";
 import { Subsidy, categoryColors } from "@/lib/subsidies";
 import AdPlaceholder from "@/components/ads/AdPlaceholder";
 

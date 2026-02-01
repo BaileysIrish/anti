@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/common/Link";
 import { notFound } from "next/navigation";
 import AdPlaceholder from "@/components/ads/AdPlaceholder";
 import { MDXRemote } from 'next-mdx-remote/rsc';

@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/common/Link";
 import AdPlaceholder from "@/components/ads/AdPlaceholder";
 import RealEstateClient from "@/components/calculator/RealEstateClient";
 
