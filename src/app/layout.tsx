@@ -99,6 +99,11 @@ export default function RootLayout({
           })(window,document,'script','dataLayer','GTM-PC79PQ58');
         `}
         </Script>
+        <Script
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1163911659491070"
+          crossOrigin="anonymous"
+          strategy="lazyOnload"
+        />
         {/* End Google Tag Manager */}
       </head>
       <body className={`${notoSansKr.variable} antialiased min-h-screen flex flex-col`}>
@@ -116,11 +121,7 @@ export default function RootLayout({
         <main className="flex-1">{children}</main>
         <Footer />
 
-        <Script
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1163911659491070"
-          crossOrigin="anonymous"
-          strategy="afterInteractive"
-        />
+
 
         <GoogleAnalytics />
       </body>
