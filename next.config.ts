@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   // OpenNext Cloudflare 호환을 위한 standalone 출력
   output: "standalone",
-  
+
   trailingSlash: true,
 
   // 이미지 최적화 - Cloudflare Edge에서는 unoptimized 사용
