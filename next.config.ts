@@ -16,6 +16,10 @@ const nextConfig: NextConfig = {
     // CSS 최적화
     optimizeCss: true,
   },
+
+  // Cloudflare Pages 배포를 위한 설정
+  output: 'export',
+  trailingSlash: true,
 };
 
 export default nextConfig;
