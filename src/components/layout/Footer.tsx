@@ -89,13 +89,6 @@ export default function Footer() {
                     </div>
                 </div>
 
-                {/* 하단 광고 영역 */}
-                <div className="mt-8 pt-8 border-t border-slate-800">
-                    <div className="ad-placeholder h-20 bg-slate-800 border-slate-700 mb-6">
-                        <span>광고 영역 (728x90)</span>
-                    </div>
-                </div>
-
                 {/* 저작권 */}
                 <div className="border-t border-slate-800 pt-6">
                     <div className="flex flex-col md:flex-row justify-between items-center text-sm text-slate-500">
