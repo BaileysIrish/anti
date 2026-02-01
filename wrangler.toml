@@ -1,3 +1,4 @@
+pages_build_output_dir = ".worker-next/assets"
 name = "anti"
 main = ".worker-next/index.mjs"
 compatibility_date = "2024-09-23"
