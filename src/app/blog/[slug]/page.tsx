@@ -2,8 +2,8 @@ import { Metadata } from "next";
 import Link from "@/components/common/Link";
 import { notFound } from "next/navigation";
 
-import { MDXRemote } from 'next-mdx-remote/rsc';
-import remarkGfm from 'remark-gfm';
+
+
 import { getAllPostSlugs, getPostBySlug, getAllPosts } from "@/lib/blog-data";
 
 export const dynamic = "force-static";
@@ -92,14 +92,11 @@ export default async function BlogPostPage({
                 {/* 본문 콘텐츠 - MDX 렌더링 */}
                 <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 md:p-12">
                     <article className="prose prose-lg max-w-none prose-headings:font-bold prose-headings:text-slate-800 prose-p:text-slate-600 prose-p:leading-relaxed prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-li:text-slate-600 prose-strong:text-slate-900 prose-img:rounded-xl">
-                        <MDXRemote
-                            source={post.content}
-                            options={{
-                                mdxOptions: {
-                                    remarkPlugins: [remarkGfm],
-                                },
-                            }}
-                        />
+                        {/* 
+                           Build-time에 이미 HTML로 변환된 콘텐츠를 렌더링합니다.
+                           런타임 에러 없이 테이블(GFM)을 완벽하게 지원합니다.
+                        */}
+                        <div dangerouslySetInnerHTML={{ __html: post.content }} />
                     </article>
 
                     {/* 면책 고지 (사용자 요청) */}
@@ -118,7 +115,7 @@ export default async function BlogPostPage({
 
                 {/* 관련 추천 글 */}
                 <section>
-                    <div className="flex items-center justify-between mb-8">
+                    <div className="flex items-center justify-between my-8">
                         <h3 className="text-2xl font-bold text-slate-900">📚 이 글과 관련된 추천 정보</h3>
                         <Link href="/blog" className="text-sm font-semibold text-primary hover:text-primary-dark" prefetch={false}>
                             전체보기 →
