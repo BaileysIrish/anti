@@ -1,15 +1,9 @@
 pages_build_output_dir = ".worker-next/assets"
 name = "anti"
-main = ".worker-next/index.mjs"
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
-
-[assets]
-directory = ".worker-next/assets"
-binding = "ASSETS"
 
 [vars]
 # Environment variables - set in Cloudflare Dashboard
 # NEXT_PUBLIC_SITE_URL = "https://fin-guide.kr"
 # NEXT_PUBLIC_GA_ID = "G-XXXXXX"
-# NEXT_PUBLIC_ADSENSE_ID = "ca-pub-XXXXXX"
