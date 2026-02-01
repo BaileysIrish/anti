@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-  "dev": "set NODE_OPTIONS=--no-warnings && next dev",
-  "build": "next build && mkdir -p .next/standalone/.next/static && cp -r .next/static/* .next/standalone/.next/static/",
-  "start": "next start",
-  "lint": "eslint"
-},
+    "dev": "set NODE_OPTIONS=--no-warnings && next dev",
+    "build": "next build && mkdir -p .next/standalone/.next/static && cp -r .next/static/. .next/standalone/.next/static/",
+    "start": "next start",
+    "lint": "eslint"
+  },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.19",
     "gray-matter": "^4.0.3",
