@@ -99,10 +99,10 @@ export default function RootLayout({
           })(window,document,'script','dataLayer','GTM-PC79PQ58');
         `}
         </Script>
-        <Script
+        <script
+          async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1163911659491070"
           crossOrigin="anonymous"
-          strategy="lazyOnload"
         />
         {/* End Google Tag Manager */}
       </head>

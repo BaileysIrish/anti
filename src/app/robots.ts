@@ -20,9 +20,9 @@ export default function robots(): MetadataRoute.Robots {
                 userAgent: 'GPTBot',
                 allow: '/',
             },
-            // 일반 검색 엔진 명시적 허용 (안전장치)
+            // 일반 검색 엔진 명시적 허용
             {
-                userAgent: ['Googlebot', 'Yeti', 'Bingbot'],
+                userAgent: ['Googlebot', 'Yeti', 'Bingbot', 'Mediapartners-Google'],
                 allow: '/',
             }
         ],
