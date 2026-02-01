@@ -1,4 +1,4 @@
-pages_build_output_dir = ".worker-next/assets"
+pages_build_output_dir = ".open-next/assets"
 name = "anti"
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
