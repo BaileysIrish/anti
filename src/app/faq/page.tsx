@@ -1,4 +1,4 @@
-import AdPlaceholder from "@/components/ads/AdPlaceholder";
+
 
 export const metadata = {
     title: "자주 묻는 질문 (FAQ) | 금융 가이드",
@@ -98,9 +98,7 @@ export default function FAQPage() {
                     </div>
                 </div>
 
-                <div className="mt-12">
-                    <AdPlaceholder variant="inline" />
-                </div>
+
             </div>
         </div>
     );

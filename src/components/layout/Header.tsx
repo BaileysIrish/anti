@@ -106,7 +106,6 @@ export default function Header() {
             </nav>
 
             {/* 상단 광고 영역 (선택적) */}
-            {/* <AdPlaceholder variant="header" /> */}
         </header>
     );
 }

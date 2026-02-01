@@ -4,7 +4,7 @@ import { Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import AdSenseScript from "@/components/ads/AdSenseScript";
+
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 
 // Pretendard 로컬 폰트 (CDN 대체용)
@@ -85,6 +85,11 @@ export default function RootLayout({
     <html lang="ko">
       <head>
         <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1163911659491070"
+          crossOrigin="anonymous"
+        ></script>
+        <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
@@ -114,7 +119,7 @@ export default function RootLayout({
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
-        <AdSenseScript />
+
         <GoogleAnalytics />
       </body>
     </html>

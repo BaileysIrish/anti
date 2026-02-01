@@ -1,5 +1,5 @@
 import Link from "@/components/common/Link";
-import AdPlaceholder from "@/components/ads/AdPlaceholder";
+
 import { fetchExchangeRates, currencyFlags, getEffectiveExchangeDate } from "@/lib/api/koreaexim";
 
 export default async function Home() {
@@ -96,8 +96,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* 상단 광고 */}
-      <AdPlaceholder variant="header" className="bg-slate-50 py-4" />
+
 
       {/* 주요 서비스 */}
       <section className="section bg-white">
@@ -162,8 +161,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* 중간 광고 */}
-      <AdPlaceholder variant="inline" />
+
 
       {/* 인기 콘텐츠 */}
       <section className="section bg-slate-50">
@@ -295,8 +293,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* 하단 광고 */}
-      <AdPlaceholder variant="footer" />
+
     </>
   );
 }

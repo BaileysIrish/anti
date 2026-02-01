@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import Link from "@/components/common/Link";
-import AdPlaceholder from "@/components/ads/AdPlaceholder";
+
 import RealEstateClient from "@/components/calculator/RealEstateClient";
 
 export const metadata: Metadata = {
@@ -35,13 +35,13 @@ export default function RealEstatePage() {
                 </div>
 
                 {/* 상단 광고 */}
-                <AdPlaceholder variant="header" />
+
 
                 {/* 실거래가 조회 UI */}
                 <RealEstateClient />
 
                 {/* 중간 광고 */}
-                <AdPlaceholder variant="inline" className="max-w-2xl mx-auto" />
+
 
                 {/* SEO 콘텐츠 */}
                 <article className="max-w-2xl mx-auto mt-12 prose prose-lg">
@@ -89,7 +89,7 @@ export default function RealEstatePage() {
                 </article>
 
                 {/* 하단 광고 */}
-                <AdPlaceholder variant="footer" className="max-w-2xl mx-auto mt-12" />
+
             </div>
         </div>
     );

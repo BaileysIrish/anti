@@ -1,6 +1,6 @@
 import Link from "@/components/common/Link";
 import { Subsidy, categoryColors } from "@/lib/subsidies";
-import AdPlaceholder from "@/components/ads/AdPlaceholder";
+
 
 interface SubsidyResultProps {
     subsidies: Subsidy[];
@@ -73,12 +73,7 @@ export default function SubsidyResult({ subsidies, onReset }: SubsidyResultProps
                             </a>
                         </div>
 
-                        {/* 3번째 항목 후 광고 삽입 */}
-                        {index === 2 && subsidies.length > 3 && (
-                            <div className="mt-6">
-                                <AdPlaceholder variant="inline" />
-                            </div>
-                        )}
+
                     </article>
                 ))}
             </div>
@@ -143,8 +138,7 @@ export default function SubsidyResult({ subsidies, onReset }: SubsidyResultProps
                             </div>
                         </div>
 
-                        {/* 광고 영역 */}
-                        <AdPlaceholder variant="inline" className="mt-6" />
+
                     </div>
                 </section>
             )}

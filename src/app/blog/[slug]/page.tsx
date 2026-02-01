@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Link from "@/components/common/Link";
 import { notFound } from "next/navigation";
-import AdPlaceholder from "@/components/ads/AdPlaceholder";
+
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import remarkGfm from 'remark-gfm';
 import { getAllPostSlugs, getPostBySlug, getAllPosts } from "@/lib/blog-data";
@@ -87,10 +87,7 @@ export default async function BlogPostPage({
                     </div>
                 </div>
 
-                {/* 상단 광고 */}
-                <div className="mb-12">
-                    <AdPlaceholder variant="header" />
-                </div>
+
 
                 {/* 본문 콘텐츠 - MDX 렌더링 */}
                 <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 md:p-12">
@@ -117,10 +114,7 @@ export default async function BlogPostPage({
                     </div>
                 </div>
 
-                {/* 중간 광고 */}
-                <div className="my-12">
-                    <AdPlaceholder variant="inline" />
-                </div>
+
 
                 {/* 관련 추천 글 */}
                 <section>
@@ -164,10 +158,7 @@ export default async function BlogPostPage({
                     </div>
                 </div>
 
-                {/* 하단 광고 */}
-                <div className="mt-12">
-                    <AdPlaceholder variant="footer" />
-                </div>
+
             </div>
         </div>
     );

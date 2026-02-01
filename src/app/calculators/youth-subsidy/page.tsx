@@ -3,7 +3,7 @@
 import { useState } from "react";
 import SubsidyForm from "@/components/calculator/SubsidyForm";
 import SubsidyResult from "@/components/calculator/SubsidyResult";
-import AdPlaceholder from "@/components/ads/AdPlaceholder";
+
 import { UserProfile, Subsidy, filterSubsidies } from "@/lib/subsidies";
 
 export default function YouthSubsidyCalculator() {
@@ -44,7 +44,7 @@ export default function YouthSubsidyCalculator() {
                 </div>
 
                 {/* 상단 광고 */}
-                <AdPlaceholder variant="header" />
+
 
                 {/* 계산기 영역 */}
                 <div className="max-w-3xl mx-auto">
@@ -57,8 +57,7 @@ export default function YouthSubsidyCalculator() {
                     )}
                 </div>
 
-                {/* 중간 광고 (결과 전에만) */}
-                {!results && <AdPlaceholder variant="inline" className="max-w-3xl mx-auto" />}
+
 
                 {/* 블로그 콘텐츠 (SEO 및 애드센스 승인용 1,500자+ 콘텐츠) */}
                 <article className="max-w-3xl mx-auto mt-12 prose prose-lg">
@@ -92,7 +91,7 @@ export default function YouthSubsidyCalculator() {
                     </p>
 
                     {/* 중간 광고 */}
-                    <AdPlaceholder variant="inline" />
+
 
                     <h3 className="text-xl font-bold mt-8 mb-4">
                         🏠 주거 지원 - 월세와 전세 부담 줄이기
@@ -218,7 +217,7 @@ export default function YouthSubsidyCalculator() {
                 </section>
 
                 {/* 하단 광고 */}
-                <AdPlaceholder variant="footer" className="max-w-3xl mx-auto mt-12" />
+
             </div>
         </div>
     );

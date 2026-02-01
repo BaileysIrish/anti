@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { currencyFlags, ExchangeRate } from "@/lib/api/koreaexim";
-import AdPlaceholder from "@/components/ads/AdPlaceholder";
+
 
 type ConversionDirection = "krwToForeign" | "foreignToKrw";
 
@@ -87,8 +87,7 @@ export default function ExchangeRateClient({ rates: initialRates, lastUpdated: i
                     </p>
                 </div>
 
-                {/* 상단 광고 */}
-                <AdPlaceholder variant="header" />
+
 
                 {/* 계산기 */}
                 <div className="max-w-2xl mx-auto mt-8">
@@ -195,8 +194,7 @@ export default function ExchangeRateClient({ rates: initialRates, lastUpdated: i
                     </div>
                 </div>
 
-                {/* 중간 광고 */}
-                <AdPlaceholder variant="inline" className="max-w-2xl mx-auto mt-8" />
+
 
                 {/* 환율 표 */}
                 <div className="max-w-2xl mx-auto mt-10">
@@ -305,8 +303,7 @@ export default function ExchangeRateClient({ rates: initialRates, lastUpdated: i
                     </div>
                 </article>
 
-                {/* 하단 광고 */}
-                <AdPlaceholder variant="footer" className="max-w-2xl mx-auto mt-12" />
+
             </div>
         </div>
     );
