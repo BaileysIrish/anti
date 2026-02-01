@@ -84,11 +84,7 @@ export default function RootLayout({
   return (
     <html lang="ko" suppressHydrationWarning>
       <head>
-        <Script
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1163911659491070"
-          crossOrigin="anonymous"
-          strategy="lazyOnload"
-        />
+
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -119,6 +115,12 @@ export default function RootLayout({
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
+
+        <Script
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1163911659491070"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
 
         <GoogleAnalytics />
       </body>

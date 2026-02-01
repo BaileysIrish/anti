@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { fetchExchangeRates } from "@/lib/api/koreaexim";
 
-export const runtime = "edge"; // Cloudflare Workers에서 실행
+// export const runtime = "edge"; // OpenNext가 자동으로 처리하도록 제거 (Node.js 호환 모드 사용)
 
 export async function GET() {
     try {
