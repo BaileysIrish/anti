@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 /* 금융 플랫폼 테마 - 화이트/블루 신뢰감 */
 :root {

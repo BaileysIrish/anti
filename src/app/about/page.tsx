@@ -78,7 +78,7 @@ export default function AboutPage() {
                         서비스 이용 중 문의사항이 있으시면 아래로 연락해 주세요.
                     </p>
                     <ul className="list-disc pl-6 mt-2">
-                        <li>이메일: contact@example.com</li>
+                        <li>이메일: official.contact.hq@gmail.com</li>
                     </ul>
 
                     <div className="mt-8 text-center">

@@ -133,16 +133,16 @@ export async function fetchExchangeRates(): Promise<ExchangeRate[]> {
     const API_KEY = process.env.KOREAEXIM_API_KEY;
 
     if (!API_KEY) {
-        console.warn("KOREAEXIM_API_KEY not configured. Using static data.");
-        return staticExchangeRates;
+        throw new Error("API Key is missing in environment variables (KOREAEXIM_API_KEY)");
     }
 
     try {
         const { searchDate } = getEffectiveExchangeDate();
         console.log(`Fetching exchange rates for date: ${searchDate}`);
 
+        // 사용자가 제공한 URL (oapi 서브도메인 사용)
         const response = await fetch(
-            `https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=${API_KEY}&searchdate=${searchDate}&data=AP01`,
+            `https://oapi.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=${API_KEY}&searchdate=${searchDate}&data=AP01`,
             {
                 next: { revalidate: 3600 },
                 headers: {
@@ -153,37 +153,60 @@ export async function fetchExchangeRates(): Promise<ExchangeRate[]> {
         );
 
         if (!response.ok) {
-            throw new Error(`API request failed: ${response.status}`);
+            throw new Error(`API request failed with status: ${response.status}`);
         }
 
         const data = await response.json();
 
-        if (Array.isArray(data) && data.length > 0) {
-            return data
-                .filter((item: Record<string, string>) =>
-                    ["USD", "EUR", "JPY", "CNH", "GBP", "CHF", "CAD", "AUD"].includes(item.cur_unit?.replace("(100)", ""))
-                )
-                .map((item: Record<string, string>) => ({
-                    currencyCode: item.cur_unit?.replace("(100)", "") || "",
-                    currencyName: item.cur_nm || "",
-                    baseRate: parseFloat(item.deal_bas_r?.replace(",", "") || "0"),
-                    buyRate: parseFloat(item.ttb?.replace(",", "") || "0"),
-                    sellRate: parseFloat(item.tts?.replace(",", "") || "0"),
-                    dealBasR: parseFloat(item.deal_bas_r?.replace(",", "") || "0"),
-                    ttBuyingRate: parseFloat(item.ttb?.replace(",", "") || "0"),
-                    ttSellingRate: parseFloat(item.tts?.replace(",", "") || "0"),
-                }));
-        } else {
-            console.warn(`No exchange rate data found for ${searchDate}. Returning static data.`);
-            return staticExchangeRates;
+        // API가 배열이 아닌 경우 (에러 응답 등)
+        if (!Array.isArray(data)) {
+            // 혹시라도 배열이 아니고 객체로 에러가 올 수도 있음
+            throw new Error(`API returned invalid data type: ${typeof data}`);
         }
 
-        return staticExchangeRates;
+        // 결과 코드가 있는 경우 체크 (1: 성공, 2: DATA코드 오류, 3: 인증코드 오류, 4: 일일제한횟수 마감)
+        // 응답이 배열의 첫번째 요소에만 result가 있을 수도 있고, 각 요소에 있을 수도 있음. 보통 배열의 요소 객체에 있음.
+        if (data.length > 0) {
+            const firstItem = data[0] as any;
+            const resultCode = firstItem.result ?? firstItem.RESULT;
+
+            if (resultCode === 3) {
+                throw new Error("API Authentication Failed (Result Code 3): Check your API Key");
+            }
+            if (resultCode === 4) {
+                throw new Error("API Daily Limit Exceeded (Result Code 4)");
+            }
+            if (resultCode !== 1 && resultCode !== undefined) {
+                // 성공(1)이 아니면서 다른 코드가 있는 경우
+                console.warn(`API returned non-success result code: ${resultCode}`);
+            }
+
+            return data
+                .filter((item: any) => {
+                    const unit = item.cur_unit ?? item.CUR_UNIT;
+                    return ["USD", "EUR", "JPY", "CNH", "GBP", "CHF", "CAD", "AUD"].includes(unit?.replace("(100)", ""));
+                })
+                .map((item: any) => {
+                    // 대소문자 모두 대응
+                    const getVal = (keyLower: string, keyUpper: string) => item[keyLower] ?? item[keyUpper] ?? "0";
+
+                    return {
+                        currencyCode: (item.cur_unit ?? item.CUR_UNIT)?.replace("(100)", "") || "",
+                        currencyName: item.cur_nm ?? item.CUR_NM ?? "",
+                        baseRate: parseFloat(getVal("deal_bas_r", "DEAL_BAS_R").replace(/,/g, "")),
+                        buyRate: parseFloat(getVal("ttb", "TTB").replace(/,/g, "")),
+                        sellRate: parseFloat(getVal("tts", "TTS").replace(/,/g, "")),
+                        dealBasR: parseFloat(getVal("deal_bas_r", "DEAL_BAS_R").replace(/,/g, "")),
+                        ttBuyingRate: parseFloat(getVal("ttb", "TTB").replace(/,/g, "")),
+                        ttSellingRate: parseFloat(getVal("tts", "TTS").replace(/,/g, "")),
+                    };
+                });
+        } else {
+            throw new Error(`No exchange rate data found for date: ${searchDate}`);
+        }
+
     } catch (error) {
-        // API 오류 발생 시 조용히 정적 데이터로 폴백 (터미널 노이즈 제거)
-        const errorMessage = error instanceof Error ? error.message : "StartUnknown error";
-        console.warn(`⚠️  Korea Exim API Connection Failed (Falling back to static data): ${errorMessage}`);
-        return staticExchangeRates;
+        throw error;
     }
 }
 

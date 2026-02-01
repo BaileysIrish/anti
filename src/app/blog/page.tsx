@@ -1,62 +1,11 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import { getAllPosts } from "@/lib/blog-data";
 
 export const metadata: Metadata = {
     title: "블로그 - 금융 정보 및 복지 가이드",
     description: "정부 지원금, 금융 상품, 부동산 정보 등 유용한 가이드를 제공합니다.",
 };
-
-// 블로그 포스트 더미 데이터
-const blogPosts = [
-    {
-        slug: "youth-subsidy-guide-2026",
-        title: "2026년 청년 지원금 총정리 - 놓치면 손해!",
-        excerpt: "청년도약계좌, 청년내일저축계좌, 청년월세지원금 등 2026년 받을 수 있는 모든 지원금을 정리했습니다.",
-        category: "지원금",
-        emoji: "💰",
-        date: "2026.01.30",
-    },
-    {
-        slug: "subsidy-application-tips",
-        title: "지원금 신청 성공 꿀팁 - 한 번에 통과하는 방법",
-        excerpt: "서류 준비부터 신청까지, 탈락 없이 지원금을 받기 위한 핵심 노하우를 공개합니다.",
-        category: "가이드",
-        emoji: "📋",
-        date: "2026.01.28",
-    },
-    {
-        slug: "exchange-rate-saving-tips",
-        title: "환전 수수료 90% 아끼는 방법",
-        excerpt: "해외여행, 유학, 해외직구 시 환전 우대율 받는 꿀팁을 알려드립니다.",
-        category: "금융",
-        emoji: "💱",
-        date: "2026.01.25",
-    },
-    {
-        slug: "unclaimed-money-search",
-        title: "내 돈 찾아가세요 - 미수령 환급금 조회 방법",
-        excerpt: "건강보험료, 국세, 지방세 등 미수령 환급금을 한 번에 조회하는 방법을 알려드립니다.",
-        category: "환급금",
-        emoji: "🔍",
-        date: "2026.01.22",
-    },
-    {
-        slug: "first-home-loan-guide",
-        title: "2026년 청년 전세/주택 대출 완벽 가이드",
-        excerpt: "버팀목 전세대출, 디딤돌 대출 등 청년을 위한 주거 지원 대출을 비교 분석합니다.",
-        category: "부동산",
-        emoji: "🏠",
-        date: "2026.01.20",
-    },
-    {
-        slug: "savings-comparison-2026",
-        title: "2026년 고금리 적금 TOP 5 비교",
-        excerpt: "은행별 청년 우대 적금 상품을 금리, 조건, 우대 사항별로 비교했습니다.",
-        category: "금융",
-        emoji: "💳",
-        date: "2026.01.18",
-    },
-];
 
 const categoryColors: Record<string, string> = {
     지원금: "bg-blue-100 text-blue-800",
@@ -67,6 +16,8 @@ const categoryColors: Record<string, string> = {
 };
 
 export default function BlogPage() {
+    const blogPosts = getAllPosts();
+
     return (
         <div className="py-8">
             <div className="container-custom">
@@ -101,7 +52,7 @@ export default function BlogPage() {
                                             {post.title}
                                         </h2>
                                         <p className="text-text-muted text-sm line-clamp-2">
-                                            {post.excerpt}
+                                            {post.description}
                                         </p>
                                     </div>
                                 </Link>

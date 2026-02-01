@@ -73,7 +73,7 @@ export default function PrivacyPage() {
                         개인정보 관련 문의사항은 아래 연락처로 문의해 주세요.
                     </p>
                     <ul className="list-disc pl-6 mt-2">
-                        <li>이메일: privacy@example.com</li>
+                        <li>이메일: official.contact.hq@gmail.com</li>
                     </ul>
 
                     <h2 className="text-xl font-bold mt-8 mb-4 text-text">6. 개인정보처리방침 변경</h2>

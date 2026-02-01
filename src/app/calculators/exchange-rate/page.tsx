@@ -17,6 +17,8 @@ export default async function ExchangeRatePage() {
     } catch (error) {
         console.error("Failed to fetch live exchange rates:", error);
         // 정적 데이터 사용 (이미 설정됨)
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        lastUpdated = `⚠️ 오류 발생: ${errorMessage} (정적 데이터 표시 중)`;
     }
 
     return (

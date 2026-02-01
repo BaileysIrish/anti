@@ -10,6 +10,7 @@ const footerLinks = {
         { name: "소개", href: "/about" },
         { name: "블로그", href: "/blog" },
         { name: "자주 묻는 질문 (FAQ)", href: "/faq" },
+        { name: "문의하기", href: "/contact" },
     ],
     legal: [
         { name: "개인정보처리방침", href: "/privacy" },
