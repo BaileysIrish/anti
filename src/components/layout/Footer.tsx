@@ -22,7 +22,7 @@ export default function Footer() {
     return (
         <footer className="bg-slate-900 text-white">
             <div className="container-custom py-12">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-4">
                     {/* 브랜드 */}
                     <div className="md:col-span-1">
                         <Link href="/" className="flex items-center space-x-2 mb-4">
