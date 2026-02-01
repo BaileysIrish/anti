@@ -1,7 +1,14 @@
 name = "anti"
-compatibility_date = "2024-01-01"
+main = ".worker-next/index.mjs"
+compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 
+[assets]
+directory = ".worker-next/assets"
+binding = "ASSETS"
+
 [vars]
-# API Key will be set in Cloudflare Dashboard
-# KOREAEXIM_API_KEY = ...
+# Environment variables - set in Cloudflare Dashboard
+# NEXT_PUBLIC_SITE_URL = "https://fin-guide.kr"
+# NEXT_PUBLIC_GA_ID = "G-XXXXXX"
+# NEXT_PUBLIC_ADSENSE_ID = "ca-pub-XXXXXX"
