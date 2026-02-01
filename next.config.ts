@@ -17,8 +17,7 @@ const nextConfig: NextConfig = {
     optimizeCss: true,
   },
 
-  // Cloudflare Pages 배포를 위한 설정
-  output: 'export',
+  // Cloudflare Pages 배포를 위한 설정 (Adapter 사용 시 export 제거)
   trailingSlash: true,
 };
 
