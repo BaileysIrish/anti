@@ -1,8 +1,5 @@
 import 'server-only';
-
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
+import blogData from './blog-data.json';
 
 export interface BlogPost {
     slug: string;
@@ -14,62 +11,21 @@ export interface BlogPost {
     content: string; // Raw MDX content
 }
 
-const BLOG_DIR = path.join(process.cwd(), 'src/content/blog');
-
 /**
  * 모든 블로그 포스트의 메타데이터를 가져옵니다.
  * 날짜 기준 내림차순 정렬됩니다.
  */
 export function getAllPosts(): BlogPost[] {
-    if (!fs.existsSync(BLOG_DIR)) {
-        return [];
-    }
-
-    const files = fs.readdirSync(BLOG_DIR).filter((file) => file.endsWith('.mdx'));
-
-    const posts = files.map((filename) => {
-        const slug = filename.replace('.mdx', '');
-        const filePath = path.join(BLOG_DIR, filename);
-        const fileContents = fs.readFileSync(filePath, 'utf8');
-        const { data, content } = matter(fileContents);
-
-        return {
-            slug,
-            title: data.title || '',
-            description: data.description || '',
-            category: data.category || '가이드',
-            emoji: data.emoji || '📝',
-            date: data.date || '',
-            content,
-        } as BlogPost;
-    });
-
-    // 날짜 기준 내림차순 정렬
-    return posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    // JSON 데이터는 이미 정렬되어 있다고 가정하거나 여기서 다시 정렬
+    return (blogData as BlogPost[]).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
 /**
  * 특정 slug의 블로그 포스트를 가져옵니다.
  */
 export function getPostBySlug(slug: string): BlogPost | null {
-    const filePath = path.join(BLOG_DIR, `${slug}.mdx`);
-
-    if (!fs.existsSync(filePath)) {
-        return null;
-    }
-
-    const fileContents = fs.readFileSync(filePath, 'utf8');
-    const { data, content } = matter(fileContents);
-
-    return {
-        slug,
-        title: data.title || '',
-        description: data.description || '',
-        category: data.category || '가이드',
-        emoji: data.emoji || '📝',
-        date: data.date || '',
-        content,
-    } as BlogPost;
+    const post = (blogData as BlogPost[]).find(p => p.slug === slug);
+    return post || null;
 }
 
 /**
@@ -77,11 +33,5 @@ export function getPostBySlug(slug: string): BlogPost | null {
  * 정적 생성(generateStaticParams)에 사용됩니다.
  */
 export function getAllPostSlugs(): string[] {
-    if (!fs.existsSync(BLOG_DIR)) {
-        return [];
-    }
-
-    return fs.readdirSync(BLOG_DIR)
-        .filter((file) => file.endsWith('.mdx'))
-        .map((file) => file.replace('.mdx', ''));
+    return (blogData as BlogPost[]).map(p => p.slug);
 }
