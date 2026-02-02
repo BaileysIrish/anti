@@ -1,6 +1,8 @@
 import Link from "@/components/common/Link";
 
 import { fetchExchangeRates, currencyFlags, getEffectiveExchangeDate } from "@/lib/api/koreaexim";
+import { fetchInterestRates, staticInterestRates, formatRate } from "@/lib/api/bok";
+import { fetchGovernmentServices, staticGovernmentServices } from "@/lib/api/gov24";
 
 export default async function Home() {
   // 실시간 환율 데이터 가져오기 (홈페이지 미리보기용)
@@ -20,6 +22,22 @@ export default async function Home() {
       { code: "JPY", rate: 9.05, flag: "🇯🇵" },
       { code: "CNH", rate: 185.30, flag: "🇨🇳" },
     ];
+  }
+
+  // 기준금리 데이터 가져오기 (한국은행 API, 24시간 캐싱)
+  let interestRates = staticInterestRates;
+  try {
+    interestRates = await fetchInterestRates();
+  } catch {
+    // 에러 시 정적 데이터 사용 (이미 할당됨)
+  }
+
+  // 정부 서비스 데이터 가져오기 (정부24 API, 24시간 캐싱)
+  let govServices = staticGovernmentServices;
+  try {
+    govServices = await fetchGovernmentServices();
+  } catch {
+    // 에러 시 정적 데이터 사용 (이미 할당됨)
   }
 
   return (
@@ -96,7 +114,31 @@ export default async function Home() {
         </div>
       </section>
 
-
+      {/* 기준금리 정보 배너 (한국은행 API, 24시간 캐싱) */}
+      <section className="bg-slate-50 border-b border-gray-100 py-4">
+        <div className="container-custom">
+          <div className="flex items-center justify-between overflow-x-auto gap-6">
+            <span className="text-sm font-semibold text-text-muted whitespace-nowrap flex items-center gap-2">
+              <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
+              기준금리 <span className="text-xs font-normal text-text-light">(한국은행 제공)</span>
+            </span>
+            <div className="flex gap-6">
+              {interestRates.slice(0, 4).map((rate) => (
+                <div
+                  key={rate.itemCode}
+                  className="flex items-center gap-2 text-sm whitespace-nowrap"
+                >
+                  <span className="font-medium text-slate-600">{rate.itemName.split(' ')[0]}</span>
+                  <span className="font-bold text-slate-800">{formatRate(rate.value)}</span>
+                </div>
+              ))}
+            </div>
+            <span className="text-xs text-text-light whitespace-nowrap">
+              {interestRates[0]?.time || '2026.01'} 기준
+            </span>
+          </div>
+        </div>
+      </section>
 
       {/* 주요 서비스 */}
       <section className="section bg-white">
@@ -238,6 +280,59 @@ export default async function Home() {
                 </p>
               </div>
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 인기 정부 서비스 (정부24 API 연동) */}
+      <section className="section bg-white">
+        <div className="container-custom">
+          <div className="flex items-center justify-between mb-10">
+            <div>
+              <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900">
+                🏛️ 인기 정부 서비스
+              </h2>
+              <p className="text-text-muted text-sm mt-2">
+                정부24 연동 · {new Date().toLocaleDateString('ko-KR')} 기준
+              </p>
+            </div>
+            <a
+              href="https://www.gov.kr/portal/rcvfvrSvc/main"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary font-semibold hover:underline"
+            >
+              정부24에서 더보기 →
+            </a>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {govServices.slice(0, 6).map((service) => (
+              <a
+                key={service.serviceId}
+                href={service.applicationUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group bg-gradient-to-br from-slate-50 to-gray-50 rounded-2xl p-6 border border-gray-100 hover:shadow-lg hover:border-primary/20 transition-all duration-300 hover:-translate-y-1"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-primary/10 to-blue-100 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+                    <span className="text-xl">📋</span>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <span className="text-xs text-primary font-bold">{service.category}</span>
+                    <h3 className="font-bold text-base mt-1 mb-2 text-slate-900 group-hover:text-primary transition-colors line-clamp-1">
+                      {service.serviceName}
+                    </h3>
+                    <p className="text-text-muted text-sm line-clamp-2">
+                      {service.description}
+                    </p>
+                    <div className="flex items-center gap-2 mt-3 text-xs text-text-light">
+                      <span className="bg-slate-100 px-2 py-1 rounded">{service.department}</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            ))}
           </div>
         </div>
       </section>
