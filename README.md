@@ -20,6 +20,26 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Environment Variables
+
+`NEXT_PUBLIC_SITE_URL` is used to generate absolute URLs for metadata, `robots.txt`, and `sitemap.xml`.
+
+- Default fallback: `https://fin-guide.kr`
+- Recommended for production/CI: set `NEXT_PUBLIC_SITE_URL` explicitly
+
+Local example (`.env.local`):
+
+```bash
+NEXT_PUBLIC_SITE_URL=https://fin-guide.kr
+```
+
+GitHub Actions deployment:
+
+- Add repository secret `NEXT_PUBLIC_SITE_URL`
+- Set its value to `https://fin-guide.kr`
+
+The deploy workflow already passes this secret into the build step.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
