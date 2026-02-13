@@ -1,7 +1,8 @@
 import { MetadataRoute } from 'next';
+import { getSiteUrl } from '@/lib/site-url';
 
 export default function robots(): MetadataRoute.Robots {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://fin-guide.kr';
+    const baseUrl = getSiteUrl();
 
     return {
         rules: [
@@ -26,6 +27,7 @@ export default function robots(): MetadataRoute.Robots {
                 allow: '/',
             }
         ],
+        host: baseUrl,
         sitemap: `${baseUrl}/sitemap.xml`,
     };
 }

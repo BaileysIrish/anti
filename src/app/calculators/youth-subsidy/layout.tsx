@@ -12,6 +12,9 @@ export const metadata: Metadata = {
         "청년월세지원",
         "2026 청년 복지",
     ],
+    alternates: {
+        canonical: "/calculators/youth-subsidy",
+    },
     openGraph: {
         title: "청년 복지 혜택 통합 계산기",
         description: "나에게 맞는 2026년 정부 지원금을 찾아보세요",

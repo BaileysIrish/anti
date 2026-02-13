@@ -3,6 +3,9 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
     title: "개인정보처리방침",
     description: "복지혜택 찾기 서비스의 개인정보처리방침입니다.",
+    alternates: {
+        canonical: "/privacy",
+    },
 };
 
 export default function PrivacyPage() {
@@ -13,7 +16,7 @@ export default function PrivacyPage() {
 
                 <div className="prose prose-lg text-text-muted">
                     <p className="mb-6">
-                        <strong>복지혜택 찾기</strong>(이하 "서비스")는 이용자의 개인정보를 중요시하며,
+                        <strong>복지혜택 찾기</strong>(이하 &quot;서비스&quot;)는 이용자의 개인정보를 중요시하며,
                         「개인정보 보호법」을 준수하고 있습니다.
                     </p>
 

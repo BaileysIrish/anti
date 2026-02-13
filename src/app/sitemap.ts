@@ -1,8 +1,9 @@
 import { MetadataRoute } from 'next';
 import { getAllPosts } from '@/lib/blog-data';
+import { getSiteUrl } from '@/lib/site-url';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://fin-guide.kr';
+    const baseUrl = getSiteUrl();
 
     // Static routes
     const routes = [
@@ -10,6 +11,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
         '/about',
         '/privacy',
         '/contact',
+        '/faq',
+        '/terms',
         '/blog',
         '/calculators/youth-subsidy',
         '/calculators/exchange-rate',

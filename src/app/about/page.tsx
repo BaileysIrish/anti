@@ -4,6 +4,9 @@ import Link from "@/components/common/Link";
 export const metadata: Metadata = {
     title: "서비스 소개",
     description: "복지혜택 찾기는 정부 지원금과 복지 혜택 정보를 제공하는 무료 서비스입니다.",
+    alternates: {
+        canonical: "/about",
+    },
 };
 
 export default function AboutPage() {

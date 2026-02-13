@@ -1,23 +1,40 @@
 import { NextResponse } from "next/server";
-import { fetchExchangeRates } from "@/lib/api/koreaexim";
+import {
+    fetchExchangeRates,
+    getEffectiveExchangeDate,
+    staticExchangeRates,
+} from "@/lib/api/koreaexim";
 
-// export const runtime = "edge"; // OpenNext가 자동으로 처리하도록 제거 (Node.js 호환 모드 사용)
+const CACHE_CONTROL = "public, s-maxage=3600, stale-while-revalidate=60";
 
 export async function GET() {
+    const { searchDate } = getEffectiveExchangeDate();
+
     try {
         const rates = await fetchExchangeRates();
+        if (!Array.isArray(rates) || rates.length === 0) {
+            throw new Error("Live exchange rate response is empty.");
+        }
+
         return NextResponse.json(rates, {
             headers: {
-                // 브라우저 캐시 1시간 (3600초) 설정
-                "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=60",
-                "CDN-Cache-Control": "public, s-maxage=3600, stale-while-revalidate=60",
-                "Vercel-CDN-Cache-Control": "public, s-maxage=3600, stale-while-revalidate=60",
+                "Cache-Control": CACHE_CONTROL,
+                "CDN-Cache-Control": CACHE_CONTROL,
+                "Vercel-CDN-Cache-Control": CACHE_CONTROL,
+                "X-Data-Source": "live",
+                "X-Data-As-Of": searchDate,
             },
         });
     } catch (error) {
-        return NextResponse.json(
-            { error: "Failed to fetch exchange rates", details: (error as Error).message },
-            { status: 500 }
-        );
+        console.error("Exchange rate API failed. Serving fallback data.", error);
+        return NextResponse.json(staticExchangeRates, {
+            headers: {
+                "Cache-Control": CACHE_CONTROL,
+                "CDN-Cache-Control": CACHE_CONTROL,
+                "Vercel-CDN-Cache-Control": CACHE_CONTROL,
+                "X-Data-Source": "fallback",
+                "X-Data-As-Of": searchDate,
+            },
+        });
     }
 }

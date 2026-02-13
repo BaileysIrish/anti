@@ -12,6 +12,9 @@ export const metadata: Metadata = {
         "원화 환전",
         "해외 송금",
     ],
+    alternates: {
+        canonical: "/calculators/exchange-rate",
+    },
     openGraph: {
         title: "환율 계산기 - 실시간 원화↔외화 변환",
         description: "한국수출입은행 기준 환율로 빠른 환율 계산",

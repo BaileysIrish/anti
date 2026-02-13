@@ -1,8 +1,15 @@
+import type { Metadata } from "next";
 import Link from "@/components/common/Link";
 
 import { fetchExchangeRates, currencyFlags, getEffectiveExchangeDate } from "@/lib/api/koreaexim";
 import { fetchInterestRates, staticInterestRates, formatRate } from "@/lib/api/bok";
 import { fetchGovernmentServices, staticGovernmentServices } from "@/lib/api/gov24";
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: "/",
+  },
+};
 
 export default async function Home() {
   // 실시간 환율 데이터 가져오기 (홈페이지 미리보기용)
@@ -19,8 +26,8 @@ export default async function Home() {
     topRates = [
       { code: "USD", rate: 1350.50, flag: "🇺🇸" },
       { code: "EUR", rate: 1480.20, flag: "🇪🇺" },
-      { code: "JPY", rate: 9.05, flag: "🇯🇵" },
-      { code: "CNH", rate: 185.30, flag: "🇨🇳" },
+      { code: "JPY", rate: 938.42, flag: "🇯🇵" },
+      { code: "CNY", rate: 185.30, flag: "🇨🇳" },
     ];
   }
 
@@ -55,7 +62,7 @@ export default async function Home() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
               </span>
-              2026년 최신 정보 실시간 업데이트
+              공식 공개데이터 기반 정보 제공
             </div>
             <h1 className="text-4xl md:text-6xl font-extrabold mb-6 leading-tight tracking-tight">
               나에게 맞는<br />
@@ -190,10 +197,10 @@ export default async function Home() {
               <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-lg">
                 <span className="text-3xl">🏠</span>
               </div>
-              <h3 className="text-xl font-bold mb-3 text-slate-900">부동산 실거래가</h3>
+              <h3 className="text-xl font-bold mb-3 text-slate-900">부동산 거래 예시</h3>
               <p className="text-text-muted leading-relaxed mb-4">
-                국토부 공식 데이터 기반 아파트, 오피스텔
-                실거래가를 조회하세요.
+                샘플 데이터 기반으로 아파트, 오피스텔
+                거래 흐름을 참고용으로 확인하세요.
               </p>
               <span className="inline-flex items-center text-primary font-semibold group-hover:gap-2 transition-all">
                 조회하기 <span className="ml-1">→</span>
@@ -280,6 +287,36 @@ export default async function Home() {
                 </p>
               </div>
             </Link>
+
+            <Link href="/blog/credit-score-management" className="group bg-white rounded-2xl p-6 flex gap-5 border border-gray-100 hover:shadow-lg hover:border-primary/20 transition-all duration-300">
+              <div className="w-20 h-20 bg-gradient-to-br from-cyan-100 to-sky-200 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+                <span className="text-3xl">📊</span>
+              </div>
+              <div>
+                <span className="text-xs text-cyan-700 font-bold">신용 관리</span>
+                <h3 className="font-bold text-lg mt-1 mb-2 text-slate-900 group-hover:text-primary transition-colors">
+                  신용점수 올리는 실전 가이드
+                </h3>
+                <p className="text-text-muted text-sm line-clamp-2">
+                  대출, 카드 발급에 영향을 주는 신용점수 관리 핵심 포인트를 정리했습니다.
+                </p>
+              </div>
+            </Link>
+
+            <Link href="/blog/real-estate-price-check-guide" className="group bg-white rounded-2xl p-6 flex gap-5 border border-gray-100 hover:shadow-lg hover:border-primary/20 transition-all duration-300">
+              <div className="w-20 h-20 bg-gradient-to-br from-orange-100 to-amber-200 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+                <span className="text-3xl">🏘️</span>
+              </div>
+              <div>
+                <span className="text-xs text-orange-700 font-bold">시세 확인</span>
+                <h3 className="font-bold text-lg mt-1 mb-2 text-slate-900 group-hover:text-primary transition-colors">
+                  실거래가 기반 시세 확인 가이드
+                </h3>
+                <p className="text-text-muted text-sm line-clamp-2">
+                  호가와 실거래가 차이를 이해하고 거래 전에 체크할 항목을 확인하세요.
+                </p>
+              </div>
+            </Link>
           </div>
         </div>
       </section>
@@ -342,21 +379,58 @@ export default async function Home() {
         <div className="container-custom">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div className="group">
-              <div className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform">50+</div>
-              <div className="text-slate-400">지원금 데이터</div>
+              <div className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform">3</div>
+              <div className="text-slate-400">핵심 계산기</div>
             </div>
             <div className="group">
-              <div className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform">10만+</div>
-              <div className="text-slate-400">월간 이용자</div>
+              <div className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform">15+</div>
+              <div className="text-slate-400">가이드 콘텐츠</div>
             </div>
             <div className="group">
-              <div className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform">실시간</div>
-              <div className="text-slate-400">데이터 업데이트</div>
+              <div className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform">공식</div>
+              <div className="text-slate-400">공공 데이터 출처</div>
             </div>
             <div className="group">
               <div className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform">100%</div>
               <div className="text-slate-400">무료 서비스</div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 작성일/출처 안내 */}
+      <section className="section bg-slate-50">
+        <div className="container-custom">
+          <div className="max-w-3xl mx-auto bg-white rounded-2xl border border-gray-100 p-6 md:p-8">
+            <h2 className="text-xl md:text-2xl font-bold text-slate-900 mb-4">콘텐츠 작성 기준 및 출처</h2>
+            <p className="text-text-muted leading-relaxed">
+              작성일: 2026년 2월 13일 · 최종 수정일: 2026년 2월 13일
+            </p>
+            <p className="text-text-muted leading-relaxed mt-3">
+              본 사이트는 정보 제공 목적이며, 정책과 수치는 기관 공고 개정에 따라 달라질 수 있습니다. 신청 전 반드시 공식 사이트의 최신 공고를 확인해 주세요.
+            </p>
+            <ul className="mt-4 space-y-2 text-sm">
+              <li>
+                <a href="https://www.gov.kr/portal/main" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                  정부24 공식 포털
+                </a>
+              </li>
+              <li>
+                <a href="https://www.bokjiro.go.kr" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                  복지로
+                </a>
+              </li>
+              <li>
+                <a href="https://www.koreaexim.go.kr" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                  한국수출입은행 환율 정보
+                </a>
+              </li>
+              <li>
+                <a href="https://ecos.bok.or.kr" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                  한국은행 경제통계시스템(ECOS)
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
       </section>

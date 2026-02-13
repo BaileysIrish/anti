@@ -3,6 +3,9 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
     title: "문의하기 - 복지혜택 찾기",
     description: "복지혜택 찾기 서비스 관련 문의나 제안사항을 보내주세요.",
+    alternates: {
+        canonical: "/contact",
+    },
 };
 
 export default function ContactPage() {

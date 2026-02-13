@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 const fs = require('fs');
 const path = require('path');
 
@@ -19,19 +20,4 @@ if (fs.existsSync(source)) {
     console.log(`Source directory not found: ${source}`);
 }
 
-// Copy content directory (for blog posts)
-const contentSource = path.join(process.cwd(), 'src', 'content');
-const contentDest = path.join(process.cwd(), '.next', 'standalone', 'src', 'content');
-
-if (fs.existsSync(contentSource)) {
-    // Ensure destination directory exists
-    const contentDestParent = path.dirname(contentDest);
-    if (!fs.existsSync(contentDestParent)) {
-        fs.mkdirSync(contentDestParent, { recursive: true });
-    }
-
-    fs.cpSync(contentSource, contentDest, { recursive: true });
-    console.log(`Copied content from ${contentSource} to ${contentDest}`);
-} else {
-    console.log(`Content directory not found: ${contentSource}`);
-}
+// Blog content is already compiled into src/lib/blog-data.json at build time.

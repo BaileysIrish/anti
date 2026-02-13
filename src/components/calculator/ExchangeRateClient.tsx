@@ -19,16 +19,26 @@ export default function ExchangeRateClient({ rates: initialRates, lastUpdated: i
 
     // 실시간 데이터 가져오기 (마운트 후 실행)
     useEffect(() => {
+        // 서버에서 이미 live 데이터를 받은 경우 중복 호출을 생략합니다.
+        if (initialIsLive) {
+            return;
+        }
+
         const fetchRealTimeRates = async () => {
             try {
                 const res = await fetch("/api/exchange-rate");
                 if (res.ok) {
                     const data = await res.json();
                     if (Array.isArray(data) && data.length > 0) {
+                        const source = res.headers.get("X-Data-Source");
+                        const asOf = res.headers.get("X-Data-As-Of");
+
                         setRates(data);
-                        setIsLive(true);
-                        const today = new Date();
-                        setLastUpdated(`${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일`);
+                        setIsLive(source === "live");
+
+                        if (asOf && /^\d{8}$/.test(asOf)) {
+                            setLastUpdated(`${asOf.slice(0, 4)}년 ${Number(asOf.slice(4, 6))}월 ${Number(asOf.slice(6, 8))}일`);
+                        }
                     }
                 }
             } catch (error) {
@@ -37,13 +47,16 @@ export default function ExchangeRateClient({ rates: initialRates, lastUpdated: i
         };
 
         fetchRealTimeRates();
-    }, []);
+    }, [initialIsLive]);
 
     const [amount, setAmount] = useState<string>("100000");
     const [selectedCurrency, setSelectedCurrency] = useState<string>("USD");
     const [direction, setDirection] = useState<ConversionDirection>("krwToForeign");
 
     const selectedRate = rates.find(r => r.currencyCode === selectedCurrency);
+    const foreignAmountLabel = selectedRate?.unitBase && selectedRate.unitBase > 1
+        ? `💵 ${selectedCurrency} 금액 (엔화 단위 입력)`
+        : `💵 ${selectedCurrency} 금액`;
 
     const calculateResult = (): string => {
         if (!selectedRate || !amount) return "0";
@@ -51,12 +64,16 @@ export default function ExchangeRateClient({ rates: initialRates, lastUpdated: i
         if (isNaN(numAmount)) return "0";
 
         if (direction === "krwToForeign") {
-            const result = numAmount / selectedRate.buyRate;
+            const result = (numAmount / selectedRate.buyRate) * selectedRate.unitBase;
             return result.toFixed(2);
         } else {
-            const result = numAmount * selectedRate.sellRate;
+            const result = (numAmount / selectedRate.unitBase) * selectedRate.sellRate;
             return result.toLocaleString("ko-KR", { maximumFractionDigits: 0 });
         }
+    };
+
+    const formatCurrencyCode = (rate: ExchangeRate): string => {
+        return rate.unitBase > 1 ? `${rate.currencyCode}(${rate.unitBase})` : rate.currencyCode;
     };
 
     const formatNumber = (value: string): string => {
@@ -128,7 +145,7 @@ export default function ExchangeRateClient({ rates: initialRates, lastUpdated: i
                                             }`}
                                     >
                                         <span className="text-2xl">{currencyFlags[rate.currencyCode]}</span>
-                                        <div className="text-sm font-bold mt-1 text-slate-700">{rate.currencyCode}</div>
+                                        <div className="text-sm font-bold mt-1 text-slate-700">{formatCurrencyCode(rate)}</div>
                                     </button>
                                 ))}
                             </div>
@@ -137,7 +154,7 @@ export default function ExchangeRateClient({ rates: initialRates, lastUpdated: i
                         {/* 금액 입력 */}
                         <div className="mb-6">
                             <label htmlFor="amount" className="block text-sm font-semibold text-slate-700 mb-3">
-                                {direction === "krwToForeign" ? "💵 원화 금액 (KRW)" : `💵 ${selectedCurrency} 금액`}
+                                {direction === "krwToForeign" ? "💵 원화 금액 (KRW)" : foreignAmountLabel}
                             </label>
                             <div className="relative">
                                 <input
@@ -189,7 +206,7 @@ export default function ExchangeRateClient({ rates: initialRates, lastUpdated: i
                         )}
 
                         <p className="text-xs text-text-light mt-4 text-center">
-                            ※ 환율은 한국수출입은행 기준이며, 실제 은행별 환율과 다를 수 있습니다.
+                            ※ 환율은 한국수출입은행 기준이며, 실제 은행별 환율과 다를 수 있습니다. JPY는 100엔 단위 기준입니다.
                         </p>
                     </div>
                 </div>
@@ -219,7 +236,7 @@ export default function ExchangeRateClient({ rates: initialRates, lastUpdated: i
                                             <div className="flex items-center gap-3">
                                                 <span className="text-2xl">{currencyFlags[rate.currencyCode]}</span>
                                                 <div>
-                                                    <span className="font-bold text-slate-800">{rate.currencyCode}</span>
+                                                    <span className="font-bold text-slate-800">{formatCurrencyCode(rate)}</span>
                                                     <span className="text-text-muted text-sm ml-2 hidden sm:inline">
                                                         {rate.currencyName}
                                                     </span>
@@ -299,6 +316,23 @@ export default function ExchangeRateClient({ rates: initialRates, lastUpdated: i
                                     <p>본 환율 정보는 한국수출입은행 고시 환율을 기준으로 하며, 실제 은행별 적용 환율과 다를 수 있습니다. 정확한 환율은 거래 은행에 직접 확인하시기 바랍니다.</p>
                                 </div>
                             </div>
+                        </div>
+
+                        <div className="mt-6 p-5 bg-slate-50 rounded-xl border border-gray-100 text-sm text-slate-600">
+                            <p className="font-semibold text-slate-800 mb-2">작성일/출처</p>
+                            <p>작성일: 2026년 2월 13일 · 최종 수정일: 2026년 2월 13일</p>
+                            <ul className="mt-2 space-y-1">
+                                <li>
+                                    <a href="https://www.koreaexim.go.kr" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                                        한국수출입은행
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.bok.or.kr/portal/main/main.do" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                                        한국은행
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </article>

@@ -5,6 +5,9 @@ import { getAllPosts } from "@/lib/blog-data";
 export const metadata: Metadata = {
     title: "블로그 - 금융 정보 및 복지 가이드",
     description: "정부 지원금, 금융 상품, 부동산 정보 등 유용한 가이드를 제공합니다.",
+    alternates: {
+        canonical: "/blog",
+    },
 };
 
 const categoryColors: Record<string, string> = {

@@ -4,8 +4,7 @@ import { Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-
-import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
+import { getSiteUrl } from "@/lib/site-url";
 
 // Pretendard 로컬 폰트 (CDN 대체용)
 const notoSansKr = Noto_Sans_KR({
@@ -16,7 +15,7 @@ const notoSansKr = Noto_Sans_KR({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://example.com"),
+  metadataBase: new URL(getSiteUrl()),
   title: {
     default: "복지혜택 찾기 - 나에게 맞는 정부 지원금 계산기",
     template: "%s | 복지혜택 찾기",
@@ -57,9 +56,6 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  verification: {
-    google: "구글-사이트-인증-코드",
-  },
 };
 
 // JSON-LD 구조화 데이터
@@ -67,13 +63,8 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   name: "복지혜택 찾기",
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://example.com",
+  url: getSiteUrl(),
   description: "정부 지원금 및 복지 혜택 맞춤형 큐레이션 플랫폼",
-  potentialAction: {
-    "@type": "SearchAction",
-    target: `${process.env.NEXT_PUBLIC_SITE_URL || "https://example.com"}/search?q={search_term_string}`,
-    "query-input": "required name=search_term_string",
-  },
 };
 
 export default function RootLayout({
@@ -124,9 +115,7 @@ export default function RootLayout({
 
 
 
-        <GoogleAnalytics />
       </body>
     </html>
   );
 }
-

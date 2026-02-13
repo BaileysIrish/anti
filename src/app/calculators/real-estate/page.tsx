@@ -4,9 +4,9 @@ import Link from "@/components/common/Link";
 import RealEstateClient from "@/components/calculator/RealEstateClient";
 
 export const metadata: Metadata = {
-    title: "부동산 실거래가 조회 - 아파트 시세 확인",
+    title: "부동산 거래 예시 조회 - 아파트 시세 참고",
     description:
-        "국토교통부 공식 데이터 기반 아파트, 오피스텔 실거래가를 조회하세요. 지역별 부동산 시세 정보를 제공합니다.",
+        "지역별 부동산 거래 예시 데이터를 확인하고, 실제 거래 전 국토교통부 공식 시스템에서 최신 정보를 재확인하세요.",
     keywords: [
         "부동산 실거래가",
         "아파트 시세",
@@ -14,6 +14,9 @@ export const metadata: Metadata = {
         "오피스텔 시세",
         "부동산 가격",
     ],
+    alternates: {
+        canonical: "/calculators/real-estate",
+    },
 };
 
 export default function RealEstatePage() {
@@ -23,14 +26,14 @@ export default function RealEstatePage() {
                 {/* 헤더 */}
                 <div className="text-center mb-8">
                     <span className="inline-block bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium mb-4">
-                        🏠 국토교통부 공식 데이터 기반
+                        🏠 거래 예시 참고용 화면
                     </span>
                     <h1 className="text-3xl md:text-4xl font-bold mb-4">
-                        부동산 실거래가 조회
+                        부동산 거래 예시 조회
                     </h1>
                     <p className="text-text-muted text-lg max-w-2xl mx-auto">
                         아파트, 오피스텔, 연립다세대 등 부동산 실거래가를
-                        조회하세요.
+                        참고용으로 확인할 수 있습니다.
                     </p>
                 </div>
 
@@ -51,8 +54,9 @@ export default function RealEstatePage() {
 
                     <p className="text-text-muted leading-relaxed mb-6">
                         부동산 거래 시 가장 중요한 것은 정확한 시세 파악입니다.
-                        국토교통부에서 제공하는 실거래가 공개시스템을 통해
-                        실제 거래된 가격을 확인할 수 있습니다.
+                        본 페이지의 예시 데이터를 통해 검색 흐름을 먼저 파악한 뒤,
+                        최종 판단은 국토교통부에서 제공하는 실거래가 공개시스템으로
+                        반드시 확인해야 합니다.
                     </p>
 
                     <h3 className="text-xl font-bold mt-8 mb-4 text-text">📊 실거래가 vs 호가</h3>
@@ -85,6 +89,19 @@ export default function RealEstatePage() {
                                 지원금 계산기 →
                             </Link>
                         </p>
+                    </div>
+
+                    <div className="bg-slate-50 border border-gray-200 rounded-xl p-6 mt-8">
+                        <h4 className="font-bold text-slate-800 mb-2">작성일/출처</h4>
+                        <p className="text-slate-600 text-sm">작성일: 2026년 2월 13일 · 최종 수정일: 2026년 2월 13일</p>
+                        <a
+                            href="https://rt.molit.go.kr"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-block mt-2 text-primary font-semibold hover:underline"
+                        >
+                            국토교통부 실거래가 공개시스템
+                        </a>
                     </div>
                 </article>
 

@@ -7,9 +7,9 @@
     "build": "node scripts/generate-blog-data.mjs && next build && node scripts/post-build.js",
     "start": "next start",
     "lint": "eslint",
-    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
-    "upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload"
+    "preview": "node scripts/cloudflare-open-next.mjs preview",
+    "deploy": "node scripts/cloudflare-open-next.mjs deploy",
+    "upload": "node scripts/cloudflare-open-next.mjs upload"
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.19",
@@ -35,6 +35,6 @@
     "tailwindcss": "^4",
     "typescript": "^5",
     "unified": "^11.0.5",
-    "wrangler": "^3.99.0"
+    "wrangler": "^4.59.2"
   }
 }

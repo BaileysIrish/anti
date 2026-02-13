@@ -1,8 +1,11 @@
+import type { Metadata } from "next";
 
-
-export const metadata = {
+export const metadata: Metadata = {
     title: "자주 묻는 질문 (FAQ) | 금융 가이드",
     description: "환율 계산, 정부 지원금, 금융 상식 등 자주 묻는 질문에 대한 답변을 확인하세요.",
+    alternates: {
+        canonical: "/faq",
+    },
 };
 
 export default function FAQPage() {

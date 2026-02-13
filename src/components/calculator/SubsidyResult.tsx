@@ -32,7 +32,7 @@ export default function SubsidyResult({ subsidies, onReset }: SubsidyResultProps
 
             {/* 지원금 목록 */}
             <div className="space-y-4">
-                {subsidies.map((subsidy, index) => (
+                {subsidies.map((subsidy) => (
                     <article key={subsidy.id} className="card p-6">
                         <div className="flex items-start justify-between gap-4 mb-4">
                             <div>

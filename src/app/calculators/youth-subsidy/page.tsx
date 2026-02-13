@@ -8,10 +8,8 @@ import { UserProfile, Subsidy, filterSubsidies } from "@/lib/subsidies";
 
 export default function YouthSubsidyCalculator() {
     const [results, setResults] = useState<Subsidy[] | null>(null);
-    const [profile, setProfile] = useState<UserProfile | null>(null);
 
     const handleSubmit = (userProfile: UserProfile) => {
-        setProfile(userProfile);
         const filtered = filterSubsidies(userProfile);
         setResults(filtered);
         // 결과로 스크롤
@@ -22,7 +20,6 @@ export default function YouthSubsidyCalculator() {
 
     const handleReset = () => {
         setResults(null);
-        setProfile(null);
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
@@ -213,6 +210,30 @@ export default function YouthSubsidyCalculator() {
                                 국민내일배움카드는 소득과 관계없이 직업훈련을 희망하는 누구나 신청 가능합니다.
                             </p>
                         </details>
+                    </div>
+                </section>
+
+                <section className="max-w-3xl mx-auto mt-10">
+                    <div className="bg-slate-50 border border-gray-200 rounded-2xl p-6">
+                        <h3 className="text-lg font-bold text-slate-900 mb-2">작성일/최종수정일 및 근거 출처</h3>
+                        <p className="text-sm text-slate-600">작성일: 2026년 2월 13일 · 최종 수정일: 2026년 2월 13일</p>
+                        <p className="text-sm text-slate-600 mt-2">
+                            정책 기준은 예산/지침 개정에 따라 달라질 수 있으므로 신청 전 공식 공고를 반드시 확인하세요.
+                        </p>
+                        <div className="mt-3 flex flex-wrap gap-3 text-sm">
+                            <a href="https://www.gov.kr/portal/main" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                                정부24
+                            </a>
+                            <a href="https://www.bokjiro.go.kr" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                                복지로
+                            </a>
+                            <a href="https://www.hrd.go.kr" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                                HRD-Net
+                            </a>
+                            <a href="https://www.work24.go.kr" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                                고용24
+                            </a>
+                        </div>
                     </div>
                 </section>
 

@@ -1,24 +1,28 @@
-import { fetchExchangeRates, staticExchangeRates } from "@/lib/api/koreaexim";
+import {
+    fetchExchangeRates,
+    getEffectiveExchangeDate,
+    staticExchangeRates,
+} from "@/lib/api/koreaexim";
 import ExchangeRateClient from "@/components/calculator/ExchangeRateClient";
 
 export default async function ExchangeRatePage() {
+    const { searchDate } = getEffectiveExchangeDate();
+    const asOfDate = `${searchDate.slice(0, 4)}년 ${Number(searchDate.slice(4, 6))}월 ${Number(searchDate.slice(6, 8))}일`;
     let rates = staticExchangeRates;
     let isLive = false;
-    let lastUpdated = "2026년 1월 31일 (정적 데이터)";
+    let lastUpdated = `${asOfDate} (정적 데이터 기준)`;
 
     try {
         const liveRates = await fetchExchangeRates();
         if (liveRates && liveRates.length > 0) {
             rates = liveRates;
             isLive = true;
-            const today = new Date();
-            lastUpdated = `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일`;
+            lastUpdated = asOfDate;
         }
-    } catch (error) {
-        console.error("Failed to fetch live exchange rates:", error);
+    } catch {
+        console.error("Failed to fetch live exchange rates. Using static fallback.");
         // 정적 데이터 사용 (이미 설정됨)
-        const errorMessage = error instanceof Error ? error.message : String(error);
-        lastUpdated = `⚠️ 오류 발생: ${errorMessage} (정적 데이터 표시 중)`;
+        lastUpdated = `${asOfDate} (정적 데이터 표시 중)`;
     }
 
     return (
