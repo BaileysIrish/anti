@@ -8,6 +8,10 @@ export interface BlogPost {
     category: "지원금" | "가이드" | "금융" | "환급금" | "부동산";
     emoji: string;
     date: string;
+    indexable: boolean;
+    author: string;
+    reviewedAt: string;
+    sources: string[];
     content: string; // Raw MDX content
 }
 
@@ -18,6 +22,13 @@ export interface BlogPost {
 export function getAllPosts(): BlogPost[] {
     // JSON 데이터는 이미 정렬되어 있다고 가정하거나 여기서 다시 정렬
     return (blogData as BlogPost[]).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+}
+
+/**
+ * 인덱스 허용 포스트만 반환합니다.
+ */
+export function getIndexablePosts(): BlogPost[] {
+    return getAllPosts().filter((post) => post.indexable);
 }
 
 /**

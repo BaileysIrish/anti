@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next';
-import { getAllPosts } from '@/lib/blog-data';
+import { getIndexablePosts } from '@/lib/blog-data';
 import { getSiteUrl } from '@/lib/site-url';
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -16,7 +16,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
         '/blog',
         '/calculators/youth-subsidy',
         '/calculators/exchange-rate',
-        '/calculators/real-estate',
     ].map((route) => ({
         url: `${baseUrl}${route}`,
         lastModified: new Date().toISOString().split('T')[0],
@@ -25,7 +24,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }));
 
     // Dynamic blog routes
-    const blogPosts = getAllPosts();
+    const blogPosts = getIndexablePosts();
     const blogRoutes = blogPosts.map((post) => ({
         url: `${baseUrl}/blog/${post.slug}`,
         lastModified: post.date, // Already in YYYY-MM-DD format from MDX

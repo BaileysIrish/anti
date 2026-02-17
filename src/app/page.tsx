@@ -158,7 +158,7 @@ export default async function Home() {
               정부 지원금부터 환율 정보까지, 재테크에 필요한 모든 정보를 한 곳에서
             </p>
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 gap-8">
             {/* 청년 지원금 */}
             <Link href="/calculators/youth-subsidy" className="group relative bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 border border-blue-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
               <div className="absolute top-4 right-4 text-xs bg-blue-500 text-white px-2 py-1 rounded-full font-medium">
@@ -192,20 +192,6 @@ export default async function Home() {
               </span>
             </Link>
 
-            {/* 부동산 시세 */}
-            <Link href="/calculators/real-estate" className="group bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-8 border border-purple-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-lg">
-                <span className="text-3xl">🏠</span>
-              </div>
-              <h3 className="text-xl font-bold mb-3 text-slate-900">부동산 거래 예시</h3>
-              <p className="text-text-muted leading-relaxed mb-4">
-                샘플 데이터 기반으로 아파트, 오피스텔
-                거래 흐름을 참고용으로 확인하세요.
-              </p>
-              <span className="inline-flex items-center text-primary font-semibold group-hover:gap-2 transition-all">
-                조회하기 <span className="ml-1">→</span>
-              </span>
-            </Link>
           </div>
         </div>
       </section>
@@ -316,6 +302,26 @@ export default async function Home() {
                   호가와 실거래가 차이를 이해하고 거래 전에 체크할 항목을 확인하세요.
                 </p>
               </div>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 추가 도구 */}
+      <section className="section bg-white">
+        <div className="container-custom">
+          <div className="max-w-3xl mx-auto rounded-2xl border border-gray-100 p-6 md:p-8 bg-slate-50">
+            <h2 className="text-xl md:text-2xl font-bold text-slate-900 mb-3">
+              추가 참고 도구
+            </h2>
+            <p className="text-text-muted mb-5">
+              부동산 거래 흐름은 참고용 도구에서 확인할 수 있습니다. 실제 의사결정 전에는 국토교통부 공식 자료를 확인해 주세요.
+            </p>
+            <Link
+              href="/calculators/real-estate"
+              className="inline-flex items-center gap-2 text-primary font-semibold hover:underline"
+            >
+              부동산 거래 참고 도구 열기 →
             </Link>
           </div>
         </div>

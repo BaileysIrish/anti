@@ -7,6 +7,10 @@ export const metadata: Metadata = {
     title: "부동산 거래 예시 조회 - 아파트 시세 참고",
     description:
         "지역별 부동산 거래 예시 데이터를 확인하고, 실제 거래 전 국토교통부 공식 시스템에서 최신 정보를 재확인하세요.",
+    robots: {
+        index: false,
+        follow: true,
+    },
     keywords: [
         "부동산 실거래가",
         "아파트 시세",

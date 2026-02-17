@@ -31,6 +31,10 @@ export async function generateMetadata({
     return {
         title: post.title,
         description: post.description,
+        robots: {
+            index: post.indexable,
+            follow: true,
+        },
         alternates: {
             canonical: `/blog/${slug}`,
         },
@@ -57,7 +61,7 @@ export default async function BlogPostPage({
     }
 
     // 관련 글 (현재 글 제외, 최대 2개)
-    const relatedPosts = allPosts.filter(p => p.slug !== slug).slice(0, 2);
+    const relatedPosts = allPosts.filter((p) => p.slug !== slug && p.indexable).slice(0, 2);
 
     return (
         <div className="min-h-screen bg-slate-50">
@@ -87,7 +91,7 @@ export default async function BlogPostPage({
                     <div className="flex items-center justify-center gap-4 text-text-muted text-sm">
                         <span>{post.date}</span>
                         <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
-                        <span>금융정보팀</span>
+                        <span>{post.author}</span>
                     </div>
                 </div>
 
@@ -95,6 +99,30 @@ export default async function BlogPostPage({
 
                 {/* 본문 콘텐츠 - MDX 렌더링 */}
                 <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 md:p-12">
+                    <div className="mb-8 rounded-xl border border-blue-100 bg-blue-50 p-5 text-sm text-slate-700">
+                        <p className="font-semibold text-slate-900">작성자 및 검수 정보</p>
+                        <p className="mt-2">작성: {post.author}</p>
+                        <p>최종 검토일: {post.reviewedAt}</p>
+                        {post.sources.length > 0 && (
+                            <>
+                                <p className="mt-3 font-medium text-slate-900">공식 출처</p>
+                                <ul className="mt-2 list-disc pl-5">
+                                    {post.sources.map((source) => (
+                                        <li key={source}>
+                                            <a
+                                                href={source}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-primary hover:underline break-all"
+                                            >
+                                                {source}
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </>
+                        )}
+                    </div>
                     <article className="prose prose-lg max-w-none prose-headings:font-bold prose-headings:text-slate-800 prose-p:text-slate-600 prose-p:leading-relaxed prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-li:text-slate-600 prose-strong:text-slate-900 prose-img:rounded-xl">
                         {/* 
                            Build-time에 이미 HTML로 변환된 콘텐츠를 렌더링합니다.

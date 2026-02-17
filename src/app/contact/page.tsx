@@ -23,8 +23,16 @@ export default function ContactPage() {
 
                     <p className="text-text-muted text-lg mb-8 leading-relaxed">
                         서비스 이용 중 불편한 점이나 제안하고 싶은 내용이 있으신가요?<br className="hidden md:block" />
-                        아래 이메일로 연락 주시면 빠르게 답변 드리겠습니다.
+                        아래 이메일로 연락 주시면 운영팀에서 확인 후 답변드립니다.
                     </p>
+
+                    <div className="bg-blue-50 border border-blue-100 rounded-xl p-5 mb-6 text-left">
+                        <p className="font-semibold text-slate-800 mb-2">운영 목적</p>
+                        <p className="text-sm text-slate-600 leading-relaxed">
+                            복지혜택 찾기는 공공기관 정책 정보를 쉽게 이해할 수 있도록 요약하고, 사용자가 본인 조건에 맞는
+                            제도를 빠르게 찾을 수 있도록 돕는 정보 서비스입니다.
+                        </p>
+                    </div>
 
                     <div className="bg-slate-50 border border-slate-100 rounded-xl p-6 mb-8 inline-block w-full max-w-md">
                         <p className="text-sm text-slate-500 mb-2 font-medium">공식 문의 이메일</p>
@@ -47,7 +55,7 @@ export default function ContactPage() {
                     </div>
 
                     <p className="mt-8 text-sm text-slate-400">
-                        * 평일 기준 24시간 이내에 답변 드리도록 노력하겠습니다.
+                        * 답변 기준: 평일 24~48시간 이내 1차 회신 (주말/공휴일 제외)
                     </p>
                 </div>
             </div>

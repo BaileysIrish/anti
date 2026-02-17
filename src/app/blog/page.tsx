@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import Link from "@/components/common/Link";
-import { getAllPosts } from "@/lib/blog-data";
+import { getIndexablePosts } from "@/lib/blog-data";
 
 export const metadata: Metadata = {
     title: "블로그 - 금융 정보 및 복지 가이드",
@@ -19,7 +19,7 @@ const categoryColors: Record<string, string> = {
 };
 
 export default function BlogPage() {
-    const blogPosts = getAllPosts();
+    const blogPosts = getIndexablePosts();
 
     return (
         <div className="py-8">

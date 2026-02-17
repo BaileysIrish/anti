@@ -44,6 +44,10 @@ async function generateBlogData() {
             category: data.category || '가이드',
             emoji: data.emoji || '📝',
             date: data.date || '',
+            indexable: data.indexable !== false,
+            author: data.author || '복지혜택 찾기 콘텐츠팀',
+            reviewedAt: data.reviewedAt || data.date || '',
+            sources: Array.isArray(data.sources) ? data.sources : [],
             content: contentHtml, // HTML content
         };
     }));

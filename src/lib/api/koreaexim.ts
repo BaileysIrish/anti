@@ -105,6 +105,30 @@ export const staticExchangeRates: ExchangeRate[] = [
     },
 ];
 
+const SUPPORTED_CURRENCIES = ["USD", "EUR", "JPY", "CNY", "CNH", "GBP", "CHF", "CAD", "AUD"] as const;
+const MAX_LOOKBACK_DAYS = 7;
+
+function formatDateAsYmd(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}${month}${day}`;
+}
+
+function parseYmdToDate(ymd: string): Date {
+    const year = Number(ymd.slice(0, 4));
+    const month = Number(ymd.slice(4, 6));
+    const day = Number(ymd.slice(6, 8));
+    // noon으로 고정해 DST/자정 경계 문제를 줄인다.
+    return new Date(year, month - 1, day, 12, 0, 0, 0);
+}
+
+function moveToPreviousBusinessDay(date: Date): void {
+    do {
+        date.setDate(date.getDate() - 1);
+    } while (date.getDay() === 0 || date.getDay() === 6);
+}
+
 // 유효한 조회 날짜(영업일) 계산 함수
 export function getEffectiveExchangeDate(): { searchDate: string, displayDate: string } {
     const now = new Date();
@@ -129,7 +153,7 @@ export function getEffectiveExchangeDate(): { searchDate: string, displayDate: s
         }
     }
 
-    const searchDate = targetDate.toISOString().slice(0, 10).replace(/-/g, "");
+    const searchDate = formatDateAsYmd(targetDate);
     const displayDate = `${targetDate.getMonth() + 1}.${targetDate.getDate()}`;
 
     return { searchDate, displayDate };
@@ -143,83 +167,89 @@ export async function fetchExchangeRates(): Promise<ExchangeRate[]> {
         throw new Error("API Key is missing in environment variables (KOREAEXIM_API_KEY)");
     }
 
-    const { searchDate } = getEffectiveExchangeDate();
-    console.log(`Fetching exchange rates for date: ${searchDate}`);
+    const { searchDate: initialSearchDate } = getEffectiveExchangeDate();
+    const candidateDate = parseYmdToDate(initialSearchDate);
+    let lastDataError: Error | null = null;
 
-    const response = await fetch(
-        `https://oapi.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=${apiKey}&searchdate=${searchDate}&data=AP01`,
-        {
-            next: { revalidate: 3600 },
-            headers: {
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-                "Accept": "application/json, text/plain, */*",
-            },
+    for (let attempt = 0; attempt < MAX_LOOKBACK_DAYS; attempt += 1) {
+        const searchDate = formatDateAsYmd(candidateDate);
+        console.log(`Fetching exchange rates for date: ${searchDate}`);
+
+        const response = await fetch(
+            `https://oapi.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=${apiKey}&searchdate=${searchDate}&data=AP01`,
+            {
+                next: { revalidate: 3600 },
+                headers: {
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                    "Accept": "application/json, text/plain, */*",
+                },
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(`API request failed with status: ${response.status}`);
         }
-    );
 
-    if (!response.ok) {
-        throw new Error(`API request failed with status: ${response.status}`);
+        const data = await response.json();
+        if (!Array.isArray(data)) {
+            throw new Error(`API returned invalid data type: ${typeof data}`);
+        }
+
+        if (data.length > 0) {
+            const firstItem = data[0] as Record<string, unknown>;
+            const resultCode = (firstItem.result ?? firstItem.RESULT) as number | undefined;
+
+            if (resultCode === 3) {
+                throw new Error("API Authentication Failed (Result Code 3): Check your API Key");
+            }
+            if (resultCode === 4) {
+                throw new Error("API Daily Limit Exceeded (Result Code 4)");
+            }
+        }
+
+        const parsedRates = data
+            .filter((item: Record<string, string>) => {
+                const rawUnit = item.cur_unit ?? item.CUR_UNIT ?? "";
+                const normalizedUnit = rawUnit.replace("(100)", "");
+                return SUPPORTED_CURRENCIES.includes(normalizedUnit as typeof SUPPORTED_CURRENCIES[number]);
+            })
+            .map((item: Record<string, string>) => {
+                const rawUnit = item.cur_unit ?? item.CUR_UNIT ?? "";
+                const unitBase = rawUnit.includes("(100)") ? 100 : 1;
+                const currencyCode = rawUnit.replace("(100)", "");
+                const getVal = (lower: string, upper: string) => item[lower] ?? item[upper] ?? "0";
+                const parseRate = (value: string): number => {
+                    const parsed = parseFloat(value.replace(/,/g, ""));
+                    return Number.isFinite(parsed) ? parsed : NaN;
+                };
+
+                return {
+                    currencyCode,
+                    currencyName: item.cur_nm ?? item.CUR_NM ?? "",
+                    baseRate: parseRate(getVal("deal_bas_r", "DEAL_BAS_R")),
+                    buyRate: parseRate(getVal("ttb", "TTB")),
+                    sellRate: parseRate(getVal("tts", "TTS")),
+                    dealBasR: parseRate(getVal("deal_bas_r", "DEAL_BAS_R")),
+                    ttBuyingRate: parseRate(getVal("ttb", "TTB")),
+                    ttSellingRate: parseRate(getVal("tts", "TTS")),
+                    unitBase,
+                };
+            })
+            .filter((rate) => {
+                return Number.isFinite(rate.baseRate)
+                    && Number.isFinite(rate.buyRate)
+                    && Number.isFinite(rate.sellRate);
+            });
+
+        if (parsedRates.length > 0) {
+            return parsedRates;
+        }
+
+        lastDataError = new Error(`No exchange rate data found for date: ${searchDate}`);
+        moveToPreviousBusinessDay(candidateDate);
     }
 
-    const data = await response.json();
-
-    if (!Array.isArray(data)) {
-        throw new Error(`API returned invalid data type: ${typeof data}`);
-    }
-
-    if (data.length === 0) {
-        throw new Error(`No exchange rate data found for date: ${searchDate}`);
-    }
-
-    const firstItem = data[0] as Record<string, unknown>;
-    const resultCode = (firstItem.result ?? firstItem.RESULT) as number | undefined;
-
-    if (resultCode === 3) {
-        throw new Error("API Authentication Failed (Result Code 3): Check your API Key");
-    }
-    if (resultCode === 4) {
-        throw new Error("API Daily Limit Exceeded (Result Code 4)");
-    }
-
-    const parsedRates = data
-        .filter((item: Record<string, string>) => {
-            const rawUnit = item.cur_unit ?? item.CUR_UNIT ?? "";
-            const normalizedUnit = rawUnit.replace("(100)", "");
-            return ["USD", "EUR", "JPY", "CNY", "CNH", "GBP", "CHF", "CAD", "AUD"].includes(normalizedUnit);
-        })
-        .map((item: Record<string, string>) => {
-            const rawUnit = item.cur_unit ?? item.CUR_UNIT ?? "";
-            const unitBase = rawUnit.includes("(100)") ? 100 : 1;
-            const currencyCode = rawUnit.replace("(100)", "");
-            const getVal = (lower: string, upper: string) => item[lower] ?? item[upper] ?? "0";
-            const parseRate = (value: string): number => {
-                const parsed = parseFloat(value.replace(/,/g, ""));
-                return Number.isFinite(parsed) ? parsed : NaN;
-            };
-
-            return {
-                currencyCode,
-                currencyName: item.cur_nm ?? item.CUR_NM ?? "",
-                baseRate: parseRate(getVal("deal_bas_r", "DEAL_BAS_R")),
-                buyRate: parseRate(getVal("ttb", "TTB")),
-                sellRate: parseRate(getVal("tts", "TTS")),
-                dealBasR: parseRate(getVal("deal_bas_r", "DEAL_BAS_R")),
-                ttBuyingRate: parseRate(getVal("ttb", "TTB")),
-                ttSellingRate: parseRate(getVal("tts", "TTS")),
-                unitBase,
-            };
-        })
-        .filter((rate) => {
-            return Number.isFinite(rate.baseRate)
-                && Number.isFinite(rate.buyRate)
-                && Number.isFinite(rate.sellRate);
-        });
-
-    if (parsedRates.length === 0) {
-        throw new Error(`No supported exchange rate entries found for date: ${searchDate}`);
-    }
-
-    return parsedRates;
+    throw lastDataError ?? new Error("No exchange rate data found in lookback window.");
 }
 
 // 환율 계산 함수

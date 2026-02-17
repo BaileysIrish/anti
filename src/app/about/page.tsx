@@ -76,6 +76,35 @@ export default function AboutPage() {
                         ℹ️ 공공데이터는 「공공데이터법」에 따라 상업적 활용이 허용됩니다.
                     </p>
 
+                    <h2 className="text-xl font-bold mt-8 mb-4 text-text">🏢 운영 주체</h2>
+                    <p>
+                        본 사이트는 <strong>복지혜택 찾기 콘텐츠팀</strong>이 운영하며, 공공기관의 원문 공고를 사용자 친화적으로
+                        정리해 제공하는 것을 목표로 합니다.
+                    </p>
+                    <ul className="list-disc pl-6 mt-2 space-y-1">
+                        <li>운영 목적: 청년·가구의 정책 접근성 개선</li>
+                        <li>수익 모델: 광고 및 제휴 링크(표시 시 명시)</li>
+                        <li>이해상충 원칙: 특정 금융/정책 상품의 대가성 우선 노출 금지</li>
+                    </ul>
+
+                    <h2 className="text-xl font-bold mt-8 mb-4 text-text">🧭 콘텐츠 검수 프로세스</h2>
+                    <ol className="list-decimal pl-6 space-y-2">
+                        <li>공식 공고문 및 기관 홈페이지 1차 확인</li>
+                        <li>자격 조건, 신청 기간, 중복 수혜 여부 교차 검토</li>
+                        <li>본문 하단에 작성자/최종 검토일/출처 공개</li>
+                        <li>변경 이슈 발생 시 우선순위 페이지부터 순차 개정</li>
+                    </ol>
+
+                    <h2 className="text-xl font-bold mt-8 mb-4 text-text">🔄 업데이트 정책</h2>
+                    <ul className="list-disc pl-6 space-y-1">
+                        <li>정책성 콘텐츠: 월 1회 정기 점검 + 고시 변경 시 수시 반영</li>
+                        <li>계산기 데이터: 공급 API 변경 또는 오류 확인 시 즉시 수정</li>
+                        <li>오류 제보: 이메일 접수 후 사실관계 확인 뒤 수정 내역 기록</li>
+                    </ul>
+                    <p className="mt-4 text-sm bg-amber-50 p-4 rounded-lg">
+                        ⚠️ 본 서비스는 정보 제공 목적이며, 최종 신청 판단은 각 기관의 최신 공고문 기준입니다.
+                    </p>
+
                     <h2 className="text-xl font-bold mt-8 mb-4 text-text">📧 문의하기</h2>
                     <p>
                         서비스 이용 중 문의사항이 있으시면 아래로 연락해 주세요.
