@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next';
 import { getIndexablePosts } from '@/lib/blog-data';
+import { getAllAuthors } from '@/lib/authors';
 import { getSiteUrl } from '@/lib/site-url';
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -13,6 +14,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
         '/contact',
         '/faq',
         '/terms',
+        '/editorial-policy',
+        '/authors',
         '/blog',
         '/calculators/youth-subsidy',
         '/calculators/exchange-rate',
@@ -27,10 +30,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     const blogPosts = getIndexablePosts();
     const blogRoutes = blogPosts.map((post) => ({
         url: `${baseUrl}/blog/${post.slug}`,
-        lastModified: post.date, // Already in YYYY-MM-DD format from MDX
+        lastModified: post.updatedAt,
         changeFrequency: 'monthly' as const,
         priority: 0.6,
     }));
 
-    return [...routes, ...blogRoutes];
+    const authorRoutes = getAllAuthors().map((author) => ({
+        url: `${baseUrl}/authors/${author.id}`,
+        lastModified: author.profileUpdatedAt,
+        changeFrequency: 'monthly' as const,
+        priority: 0.5,
+    }));
+
+    return [...routes, ...blogRoutes, ...authorRoutes];
 }

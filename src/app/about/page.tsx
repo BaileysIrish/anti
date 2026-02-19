@@ -54,10 +54,10 @@ export default function AboutPage() {
                             </div>
                         </div>
                         <div className="card p-4 flex gap-4 items-start">
-                            <div className="text-2xl">🏠</div>
+                            <div className="text-2xl">📚</div>
                             <div>
-                                <h3 className="font-bold text-text">부동산 시세 조회</h3>
-                                <p className="text-sm">국토부 실거래가 데이터 기반 시세 정보</p>
+                                <h3 className="font-bold text-text">정책 가이드 콘텐츠</h3>
+                                <p className="text-sm">신청 절차, 탈락 사유, 서류 체크리스트 등 실무형 가이드 제공</p>
                             </div>
                         </div>
                     </div>
@@ -70,7 +70,7 @@ export default function AboutPage() {
                         <li>정부24 공공서비스 API</li>
                         <li>복지로 복지서비스 정보</li>
                         <li>한국은행 경제통계 API</li>
-                        <li>국토교통부 실거래가 API</li>
+                        <li>한국수출입은행 환율 정보</li>
                     </ul>
                     <p className="mt-4 text-sm bg-blue-50 p-4 rounded-lg">
                         ℹ️ 공공데이터는 「공공데이터법」에 따라 상업적 활용이 허용됩니다.
@@ -80,6 +80,10 @@ export default function AboutPage() {
                     <p>
                         본 사이트는 <strong>복지혜택 찾기 콘텐츠팀</strong>이 운영하며, 공공기관의 원문 공고를 사용자 친화적으로
                         정리해 제공하는 것을 목표로 합니다.
+                    </p>
+                    <p>
+                        작성자 프로필과 검수 담당 정보는 <Link href="/authors" className="text-primary hover:underline">작성자 페이지</Link>에서
+                        공개하며, 편집 기준과 수정 이력은 <Link href="/editorial-policy" className="text-primary hover:underline">편집정책 페이지</Link>에서 확인할 수 있습니다.
                     </p>
                     <ul className="list-disc pl-6 mt-2 space-y-1">
                         <li>운영 목적: 청년·가구의 정책 접근성 개선</li>

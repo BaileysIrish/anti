@@ -56,7 +56,7 @@ export default function YouthSubsidyCalculator() {
 
 
 
-                {/* 블로그 콘텐츠 (SEO 및 애드센스 승인용 1,500자+ 콘텐츠) */}
+                {/* 상세 안내 콘텐츠 */}
                 <article className="max-w-3xl mx-auto mt-12 prose prose-lg">
                     <h2 className="text-2xl font-bold mb-6">
                         2026년 정부 지원금, 더 많이 받는 방법 완벽 가이드
@@ -216,7 +216,7 @@ export default function YouthSubsidyCalculator() {
                 <section className="max-w-3xl mx-auto mt-10">
                     <div className="bg-slate-50 border border-gray-200 rounded-2xl p-6">
                         <h3 className="text-lg font-bold text-slate-900 mb-2">작성일/최종수정일 및 근거 출처</h3>
-                        <p className="text-sm text-slate-600">작성일: 2026년 2월 13일 · 최종 수정일: 2026년 2월 13일</p>
+                        <p className="text-sm text-slate-600">작성일: 2026년 2월 19일 · 최종 수정일: 2026년 2월 19일</p>
                         <p className="text-sm text-slate-600 mt-2">
                             정책 기준은 예산/지침 개정에 따라 달라질 수 있으므로 신청 전 공식 공고를 반드시 확인하세요.
                         </p>

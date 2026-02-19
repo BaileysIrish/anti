@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "@/components/common/Link";
-import { getAllPosts } from "@/lib/blog-data";
+import { getIndexablePosts } from "@/lib/blog-data";
 
 export const metadata: Metadata = {
     title: "사이트 검색",
@@ -22,7 +22,7 @@ export default async function SearchPage({
     const { q } = await searchParams;
     const keyword = q?.trim() ?? "";
 
-    const posts = getAllPosts();
+    const posts = getIndexablePosts();
     const matchedPosts = keyword
         ? posts.filter((post) => {
               const haystack = `${post.title} ${post.description} ${post.category}`.toLowerCase();

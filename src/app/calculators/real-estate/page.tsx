@@ -97,7 +97,7 @@ export default function RealEstatePage() {
 
                     <div className="bg-slate-50 border border-gray-200 rounded-xl p-6 mt-8">
                         <h4 className="font-bold text-slate-800 mb-2">작성일/출처</h4>
-                        <p className="text-slate-600 text-sm">작성일: 2026년 2월 13일 · 최종 수정일: 2026년 2월 13일</p>
+                        <p className="text-slate-600 text-sm">작성일: 2026년 2월 19일 · 최종 수정일: 2026년 2월 19일</p>
                         <a
                             href="https://rt.molit.go.kr"
                             target="_blank"

@@ -94,16 +94,16 @@ export default function SubsidyResult({ subsidies, onReset }: SubsidyResultProps
                 </div>
             )}
 
-            {/* 추천 금융 상품 섹션 (고단가 광고 유도) */}
+            {/* 자금관리 참고 섹션 */}
             {totalCount > 0 && (
                 <section className="mt-8">
                     <div className="card p-6 md:p-8 bg-gradient-to-r from-amber-50 to-orange-50 border-amber-200">
                         <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
                             <span>💳</span>
-                            지원금과 함께 활용하면 좋은 금융 상품
+                            지원금 수령 후 자금관리 체크 포인트
                         </h3>
                         <p className="text-text-muted mb-6">
-                            정부 지원금을 더 효율적으로 활용할 수 있는 금융 상품을 추천해드립니다.
+                            지원금은 소비로 소진되기 쉬워서, 목적별로 분리 관리하면 실제 체감 효과가 높아집니다.
                         </p>
 
                         <div className="grid md:grid-cols-2 gap-4">
@@ -113,12 +113,12 @@ export default function SubsidyResult({ subsidies, onReset }: SubsidyResultProps
                                         적금
                                     </div>
                                     <div>
-                                        <h4 className="font-bold">고금리 청년 적금</h4>
-                                        <p className="text-xs text-text-muted">연 최대 6% 금리</p>
+                                        <h4 className="font-bold">목표 저축 통장</h4>
+                                        <p className="text-xs text-text-muted">월 목표 기반 분리 관리</p>
                                     </div>
                                 </div>
                                 <p className="text-sm text-text-muted">
-                                    청년도약계좌와 함께 가입하면 이자 수익 극대화
+                                    월세·비상금과 분리해 지원금 사용 목적을 고정하면 누수를 줄일 수 있습니다.
                                 </p>
                             </div>
 
@@ -128,12 +128,12 @@ export default function SubsidyResult({ subsidies, onReset }: SubsidyResultProps
                                         CMA
                                     </div>
                                     <div>
-                                        <h4 className="font-bold">CMA 통장</h4>
-                                        <p className="text-xs text-text-muted">수시입출금 고금리</p>
+                                        <h4 className="font-bold">생활비 버퍼 통장</h4>
+                                        <p className="text-xs text-text-muted">긴급 지출 대비</p>
                                     </div>
                                 </div>
                                 <p className="text-sm text-text-muted">
-                                    지원금 수령 후 굴리기 좋은 수시입출금 상품
+                                    고정지출 1~2개월분을 별도로 보관하면 중도해지 위험을 낮출 수 있습니다.
                                 </p>
                             </div>
                         </div>
@@ -151,9 +151,9 @@ export default function SubsidyResult({ subsidies, onReset }: SubsidyResultProps
                         <h4 className="font-semibold mb-1">2026년 청년 지원금 총정리</h4>
                         <p className="text-sm text-text-muted">놓치면 안 되는 지원금 완벽 가이드</p>
                     </Link>
-                    <Link href="/blog/subsidy-application-tips" className="card p-4 hover:shadow-md transition-shadow">
-                        <h4 className="font-semibold mb-1">지원금 신청 성공 꿀팁</h4>
-                        <p className="text-sm text-text-muted">탈락 없이 한 번에 통과하는 방법</p>
+                    <Link href="/blog/youth-subsidy-application-rejection-reasons-2026" className="card p-4 hover:shadow-md transition-shadow">
+                        <h4 className="font-semibold mb-1">지원금 심사에서 자주 탈락하는 이유</h4>
+                        <p className="text-sm text-text-muted">보완 요청을 줄이는 실전 체크리스트</p>
                     </Link>
                 </div>
             </section>

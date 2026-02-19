@@ -4,14 +4,15 @@ import { notFound } from "next/navigation";
 
 
 
-import { getAllPostSlugs, getPostBySlug, getAllPosts } from "@/lib/blog-data";
+import { getPostBySlug, getAllPosts, getIndexablePosts } from "@/lib/blog-data";
+import { getAuthorById } from "@/lib/authors";
 
 export const dynamic = "force-static";
 
 // 정적 생성을 위한 경로 생성
 export async function generateStaticParams() {
-    return getAllPostSlugs().map((slug) => ({
-        slug,
+    return getIndexablePosts().map((post) => ({
+        slug: post.slug,
     }));
 }
 
@@ -24,7 +25,7 @@ export async function generateMetadata({
     const { slug } = await params;
     const post = getPostBySlug(slug);
 
-    if (!post) {
+    if (!post || !post.indexable) {
         return { title: "게시글을 찾을 수 없습니다" };
     }
 
@@ -56,9 +57,10 @@ export default async function BlogPostPage({
     const post = getPostBySlug(slug);
     const allPosts = getAllPosts();
 
-    if (!post) {
+    if (!post || !post.indexable) {
         notFound();
     }
+    const authorProfile = getAuthorById(post.authorId);
 
     // 관련 글 (현재 글 제외, 최대 2개)
     const relatedPosts = allPosts.filter((p) => p.slug !== slug && p.indexable).slice(0, 2);
@@ -91,7 +93,13 @@ export default async function BlogPostPage({
                     <div className="flex items-center justify-center gap-4 text-text-muted text-sm">
                         <span>{post.date}</span>
                         <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
-                        <span>{post.author}</span>
+                        {authorProfile ? (
+                            <Link href={`/authors/${authorProfile.id}`} className="hover:text-primary hover:underline">
+                                {post.author}
+                            </Link>
+                        ) : (
+                            <span>{post.author}</span>
+                        )}
                     </div>
                 </div>
 
@@ -101,8 +109,22 @@ export default async function BlogPostPage({
                 <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 md:p-12">
                     <div className="mb-8 rounded-xl border border-blue-100 bg-blue-50 p-5 text-sm text-slate-700">
                         <p className="font-semibold text-slate-900">작성자 및 검수 정보</p>
-                        <p className="mt-2">작성: {post.author}</p>
+                        <p className="mt-2">
+                            작성:{" "}
+                            {authorProfile ? (
+                                <Link href={`/authors/${authorProfile.id}`} className="text-primary hover:underline">
+                                    {post.author}
+                                </Link>
+                            ) : (
+                                post.author
+                            )}
+                        </p>
                         <p>최종 검토일: {post.reviewedAt}</p>
+                        <p>최종 수정일: {post.updatedAt}</p>
+                        <p className="mt-1 text-xs">
+                            체크리스트 포함: {post.qualitySignals.hasChecklist ? "예" : "아니오"} · 사례 포함:{" "}
+                            {post.qualitySignals.hasCaseStudy ? "예" : "아니오"}
+                        </p>
                         {post.sources.length > 0 && (
                             <>
                                 <p className="mt-3 font-medium text-slate-900">공식 출처</p>

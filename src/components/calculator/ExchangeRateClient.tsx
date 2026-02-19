@@ -320,7 +320,7 @@ export default function ExchangeRateClient({ rates: initialRates, lastUpdated: i
 
                         <div className="mt-6 p-5 bg-slate-50 rounded-xl border border-gray-100 text-sm text-slate-600">
                             <p className="font-semibold text-slate-800 mb-2">작성일/출처</p>
-                            <p>작성일: 2026년 2월 13일 · 최종 수정일: 2026년 2월 13일</p>
+                            <p>작성일: 2026년 2월 19일 · 최종 수정일: 2026년 2월 19일</p>
                             <ul className="mt-2 space-y-1">
                                 <li>
                                     <a href="https://www.koreaexim.go.kr" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">

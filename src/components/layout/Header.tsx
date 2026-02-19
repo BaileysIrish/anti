@@ -7,8 +7,8 @@ const navigation = [
     { name: "홈", href: "/" },
     { name: "지원금 계산기", href: "/calculators/youth-subsidy" },
     { name: "환율 계산기", href: "/calculators/exchange-rate" },
-    { name: "부동산 시세", href: "/calculators/real-estate" },
     { name: "블로그", href: "/blog" },
+    { name: "작성자", href: "/authors" },
     { name: "FAQ", href: "/faq" },
 ];
 

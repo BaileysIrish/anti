@@ -4,17 +4,18 @@ const footerLinks = {
     services: [
         { name: "청년 지원금 계산기", href: "/calculators/youth-subsidy" },
         { name: "환율 계산기", href: "/calculators/exchange-rate" },
-        { name: "부동산 시세", href: "/calculators/real-estate" },
     ],
     company: [
         { name: "소개", href: "/about" },
         { name: "블로그", href: "/blog" },
+        { name: "작성자/운영진", href: "/authors" },
         { name: "자주 묻는 질문 (FAQ)", href: "/faq" },
         { name: "문의하기", href: "/contact" },
     ],
     legal: [
         { name: "개인정보처리방침", href: "/privacy" },
         { name: "이용약관", href: "/terms" },
+        { name: "편집정책/수정이력", href: "/editorial-policy" },
     ],
 };
 

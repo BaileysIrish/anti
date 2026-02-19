@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Link from "@/components/common/Link";
 
 export const metadata: Metadata = {
     title: "문의하기 - 복지혜택 찾기",
@@ -31,6 +32,10 @@ export default function ContactPage() {
                         <p className="text-sm text-slate-600 leading-relaxed">
                             복지혜택 찾기는 공공기관 정책 정보를 쉽게 이해할 수 있도록 요약하고, 사용자가 본인 조건에 맞는
                             제도를 빠르게 찾을 수 있도록 돕는 정보 서비스입니다.
+                        </p>
+                        <p className="text-sm text-slate-600 leading-relaxed mt-3">
+                            콘텐츠 검수 기준은 <Link href="/editorial-policy" className="text-primary hover:underline">편집정책</Link>,
+                            작성자/운영진 정보는 <Link href="/authors" className="text-primary hover:underline ml-1">작성자 페이지</Link>에서 확인할 수 있습니다.
                         </p>
                     </div>
 

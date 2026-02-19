@@ -10,9 +10,16 @@ export interface BlogPost {
     date: string;
     indexable: boolean;
     author: string;
+    authorId: string;
     reviewedAt: string;
+    updatedAt: string;
+    qualitySignals: {
+        hasChecklist: boolean;
+        hasCaseStudy: boolean;
+        sourceCount: number;
+    };
     sources: string[];
-    content: string; // Raw MDX content
+    content: string; // HTML content generated at build time
 }
 
 /**

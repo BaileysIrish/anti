@@ -4,6 +4,7 @@ import Link from "@/components/common/Link";
 import { fetchExchangeRates, currencyFlags, getEffectiveExchangeDate } from "@/lib/api/koreaexim";
 import { fetchInterestRates, staticInterestRates, formatRate } from "@/lib/api/bok";
 import { fetchGovernmentServices, staticGovernmentServices } from "@/lib/api/gov24";
+import { getIndexablePosts } from "@/lib/blog-data";
 
 export const metadata: Metadata = {
   alternates: {
@@ -12,6 +13,8 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
+  const guideCount = getIndexablePosts().length;
+
   // 실시간 환율 데이터 가져오기 (홈페이지 미리보기용)
   let topRates: { code: string; rate: number; flag: string }[] = [];
   const { displayDate } = getEffectiveExchangeDate();
@@ -217,27 +220,85 @@ export default async function Home() {
               <div>
                 <span className="text-xs text-primary font-bold">지원금 가이드</span>
                 <h3 className="font-bold text-lg mt-1 mb-2 text-slate-900 group-hover:text-primary transition-colors">
-                  2026년 청년 지원금 총정리 - 놓치면 손해!
+                  2026년 청년 지원금 총정리
                 </h3>
                 <p className="text-text-muted text-sm line-clamp-2">
-                  청년도약계좌, 청년내일저축계좌, 청년월세지원금 등
-                  2026년 받을 수 있는 모든 지원금을 정리했습니다.
+                  내 상황별 우선순위를 정할 수 있도록 제도별 선택 기준을 정리했습니다.
+                </p>
+              </div>
+            </Link>
+
+            <Link href="/blog/youth-subsidy-application-rejection-reasons-2026" className="group bg-white rounded-2xl p-6 flex gap-5 border border-gray-100 hover:shadow-lg hover:border-primary/20 transition-all duration-300">
+              <div className="w-20 h-20 bg-gradient-to-br from-red-100 to-rose-200 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+                <span className="text-3xl">🧾</span>
+              </div>
+              <div>
+                <span className="text-xs text-rose-700 font-bold">신청 실무</span>
+                <h3 className="font-bold text-lg mt-1 mb-2 text-slate-900 group-hover:text-primary transition-colors">
+                  지원금 심사에서 자주 탈락하는 이유 12가지
+                </h3>
+                <p className="text-text-muted text-sm line-clamp-2">
+                  보완 요청과 반려 사유를 실제 신청 흐름 기준으로 점검합니다.
+                </p>
+              </div>
+            </Link>
+
+            <Link href="/blog/government-support-documents-checklist-2026" className="group bg-white rounded-2xl p-6 flex gap-5 border border-gray-100 hover:shadow-lg hover:border-primary/20 transition-all duration-300">
+              <div className="w-20 h-20 bg-gradient-to-br from-indigo-100 to-violet-200 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+                <span className="text-3xl">📁</span>
+              </div>
+              <div>
+                <span className="text-xs text-indigo-700 font-bold">서류 체크</span>
+                <h3 className="font-bold text-lg mt-1 mb-2 text-slate-900 group-hover:text-primary transition-colors">
+                  정부지원 서류 준비 체크리스트
+                </h3>
+                <p className="text-text-muted text-sm line-clamp-2">
+                  신청 직전 누락이 잦은 증빙 서류를 문서별로 정리했습니다.
+                </p>
+              </div>
+            </Link>
+
+            <Link href="/blog/youth-account-comparison-2026" className="group bg-white rounded-2xl p-6 flex gap-5 border border-gray-100 hover:shadow-lg hover:border-primary/20 transition-all duration-300">
+              <div className="w-20 h-20 bg-gradient-to-br from-cyan-100 to-sky-200 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+                <span className="text-3xl">⚖️</span>
+              </div>
+              <div>
+                <span className="text-xs text-cyan-700 font-bold">금융 비교</span>
+                <h3 className="font-bold text-lg mt-1 mb-2 text-slate-900 group-hover:text-primary transition-colors">
+                  청년도약계좌 vs 청년내일저축계좌
+                </h3>
+                <p className="text-text-muted text-sm line-clamp-2">
+                  소득구간과 유지 조건 기준으로 어떤 계좌가 유리한지 비교합니다.
                 </p>
               </div>
             </Link>
 
             <Link href="/blog/savings-comparison-2026" className="group bg-white rounded-2xl p-6 flex gap-5 border border-gray-100 hover:shadow-lg hover:border-primary/20 transition-all duration-300">
-              <div className="w-20 h-20 bg-gradient-to-br from-green-100 to-green-200 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+              <div className="w-20 h-20 bg-gradient-to-br from-purple-100 to-purple-200 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
                 <span className="text-3xl">💳</span>
               </div>
               <div>
-                <span className="text-xs text-green-600 font-bold">금융 팁</span>
+                <span className="text-xs text-purple-600 font-bold">금융 팁</span>
                 <h3 className="font-bold text-lg mt-1 mb-2 text-slate-900 group-hover:text-primary transition-colors">
-                  2026년 고금리 적금 TOP 5 비교
+                  2026년 고금리 적금 비교
                 </h3>
                 <p className="text-text-muted text-sm line-clamp-2">
-                  지원금을 더 불릴 수 있는 고금리 적금 상품을
-                  비교 분석했습니다.
+                  우대조건 달성 가능성과 중도해지 리스크를 중심으로 정리했습니다.
+                </p>
+              </div>
+            </Link>
+
+            <Link href="/blog/exchange-rate-saving-tips" className="group bg-white rounded-2xl p-6 flex gap-5 border border-gray-100 hover:shadow-lg hover:border-primary/20 transition-all duration-300">
+              <div className="w-20 h-20 bg-gradient-to-br from-teal-100 to-emerald-200 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+                <span className="text-3xl">💱</span>
+              </div>
+              <div>
+                <span className="text-xs text-teal-700 font-bold">환전 전략</span>
+                <h3 className="font-bold text-lg mt-1 mb-2 text-slate-900 group-hover:text-primary transition-colors">
+                  환전 수수료 아끼는 실전 전략
+                </h3>
+                <p className="text-text-muted text-sm line-clamp-2">
+                  환율 숫자보다 중요한 환전 순서와 수수료 절감 포인트를 설명합니다.
                 </p>
               </div>
             </Link>
@@ -249,79 +310,27 @@ export default async function Home() {
               <div>
                 <span className="text-xs text-yellow-600 font-bold">환급금</span>
                 <h3 className="font-bold text-lg mt-1 mb-2 text-slate-900 group-hover:text-primary transition-colors">
-                  미수령 환급금 조회 방법 - 내 돈 찾아가세요
+                  미수령 환급금 조회 완전 가이드
                 </h3>
                 <p className="text-text-muted text-sm line-clamp-2">
-                  건강보험료, 국세, 지방세 등 미수령 환급금을
-                  한 번에 조회하는 방법을 알려드립니다.
+                  조회 순서와 증빙 준비법을 기준으로 환급 가능성을 높이는 방법을 설명합니다.
                 </p>
               </div>
             </Link>
 
             <Link href="/blog/first-home-loan-guide" className="group bg-white rounded-2xl p-6 flex gap-5 border border-gray-100 hover:shadow-lg hover:border-primary/20 transition-all duration-300">
-              <div className="w-20 h-20 bg-gradient-to-br from-purple-100 to-purple-200 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+              <div className="w-20 h-20 bg-gradient-to-br from-pink-100 to-rose-200 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
                 <span className="text-3xl">🏠</span>
               </div>
               <div>
-                <span className="text-xs text-purple-600 font-bold">부동산</span>
+                <span className="text-xs text-pink-700 font-bold">주거 대출</span>
                 <h3 className="font-bold text-lg mt-1 mb-2 text-slate-900 group-hover:text-primary transition-colors">
-                  2026년 청년 주거 지원 정책 완벽 가이드
+                  청년 전세·주택자금 대출 가이드
                 </h3>
                 <p className="text-text-muted text-sm line-clamp-2">
-                  청년 전용 임대주택, 주거급여, 전세자금대출 등
-                  주거 지원 정책을 총정리했습니다.
+                  금리보다 상환 가능성을 먼저 점검하는 실무 체크리스트를 제공합니다.
                 </p>
               </div>
-            </Link>
-
-            <Link href="/blog/credit-score-management" className="group bg-white rounded-2xl p-6 flex gap-5 border border-gray-100 hover:shadow-lg hover:border-primary/20 transition-all duration-300">
-              <div className="w-20 h-20 bg-gradient-to-br from-cyan-100 to-sky-200 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
-                <span className="text-3xl">📊</span>
-              </div>
-              <div>
-                <span className="text-xs text-cyan-700 font-bold">신용 관리</span>
-                <h3 className="font-bold text-lg mt-1 mb-2 text-slate-900 group-hover:text-primary transition-colors">
-                  신용점수 올리는 실전 가이드
-                </h3>
-                <p className="text-text-muted text-sm line-clamp-2">
-                  대출, 카드 발급에 영향을 주는 신용점수 관리 핵심 포인트를 정리했습니다.
-                </p>
-              </div>
-            </Link>
-
-            <Link href="/blog/real-estate-price-check-guide" className="group bg-white rounded-2xl p-6 flex gap-5 border border-gray-100 hover:shadow-lg hover:border-primary/20 transition-all duration-300">
-              <div className="w-20 h-20 bg-gradient-to-br from-orange-100 to-amber-200 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
-                <span className="text-3xl">🏘️</span>
-              </div>
-              <div>
-                <span className="text-xs text-orange-700 font-bold">시세 확인</span>
-                <h3 className="font-bold text-lg mt-1 mb-2 text-slate-900 group-hover:text-primary transition-colors">
-                  실거래가 기반 시세 확인 가이드
-                </h3>
-                <p className="text-text-muted text-sm line-clamp-2">
-                  호가와 실거래가 차이를 이해하고 거래 전에 체크할 항목을 확인하세요.
-                </p>
-              </div>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* 추가 도구 */}
-      <section className="section bg-white">
-        <div className="container-custom">
-          <div className="max-w-3xl mx-auto rounded-2xl border border-gray-100 p-6 md:p-8 bg-slate-50">
-            <h2 className="text-xl md:text-2xl font-bold text-slate-900 mb-3">
-              추가 참고 도구
-            </h2>
-            <p className="text-text-muted mb-5">
-              부동산 거래 흐름은 참고용 도구에서 확인할 수 있습니다. 실제 의사결정 전에는 국토교통부 공식 자료를 확인해 주세요.
-            </p>
-            <Link
-              href="/calculators/real-estate"
-              className="inline-flex items-center gap-2 text-primary font-semibold hover:underline"
-            >
-              부동산 거래 참고 도구 열기 →
             </Link>
           </div>
         </div>
@@ -385,11 +394,11 @@ export default async function Home() {
         <div className="container-custom">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div className="group">
-              <div className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform">3</div>
+              <div className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform">2</div>
               <div className="text-slate-400">핵심 계산기</div>
             </div>
             <div className="group">
-              <div className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform">15+</div>
+              <div className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform">{guideCount}</div>
               <div className="text-slate-400">가이드 콘텐츠</div>
             </div>
             <div className="group">
@@ -410,7 +419,7 @@ export default async function Home() {
           <div className="max-w-3xl mx-auto bg-white rounded-2xl border border-gray-100 p-6 md:p-8">
             <h2 className="text-xl md:text-2xl font-bold text-slate-900 mb-4">콘텐츠 작성 기준 및 출처</h2>
             <p className="text-text-muted leading-relaxed">
-              작성일: 2026년 2월 13일 · 최종 수정일: 2026년 2월 13일
+              작성일: 2026년 2월 19일 · 최종 수정일: 2026년 2월 19일
             </p>
             <p className="text-text-muted leading-relaxed mt-3">
               본 사이트는 정보 제공 목적이며, 정책과 수치는 기관 공고 개정에 따라 달라질 수 있습니다. 신청 전 반드시 공식 사이트의 최신 공고를 확인해 주세요.
